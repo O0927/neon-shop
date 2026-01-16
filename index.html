@@ -1,83 +1,62 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <title>Neon LED Shop</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: radial-gradient(circle at top, #0f172a, #020617);
-            color: white;
-            margin: 0;
-            padding: 40px;
-        }
-        .container {
-            max-width: 900px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            background: #020617;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 0 30px #22d3ee;
-        }
-        img {
-            width: 100%;
-            border-radius: 15px;
-        }
-        button {
-            background: #22d3ee;
-            color: black;
-            border: none;
-            padding: 15px 25px;
-            font-size: 18px;
-            border-radius: 12px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            border-radius: 8px;
-            border: none;
-            font-size: 16px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Neon Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Telegram WebApp API -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      background: #00ffcc;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <div>
-        <h1>✨ Неонова LED-вивіска</h1>
-        <p>Індивідуальне виготовлення неонових вивісок для бізнесу, ігор та дому.</p>
-        <h2>Ціна: від 5 000 грн</h2>
+<h2>🛒 Замовлення LED-вивіски</h2>
 
-        <input id="name" placeholder="Ваше імʼя">
-        <input id="contact" placeholder="Телефон або Telegram">
+<input id="product" placeholder="Назва товару">
+<input id="name" placeholder="Ваше імʼя">
+<input id="contact" placeholder="Телефон / Telegram">
 
-        <button onclick="sendRequest()">📩 Залишити заявку</button>
-    </div>
-
-    <div>
-        <img src="https://i.imgur.com/6YVYF6L.png">
-    </div>
-</div>
+<button onclick="sendData()">Надіслати</button>
 
 <script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();
+  const tg = window.Telegram.WebApp;
+  tg.expand(); // розгортає Web App на весь екран
 
-    function sendRequest() {
-        const data = {
-            product: "Neon LED sign",
-            name: document.getElementById("name").value,
-            contact: document.getElementById("contact").value
-        };
-        tg.sendData(JSON.stringify(data));
-    }
+  function sendData() {
+    const data = {
+      product: document.getElementById("product").value,
+      name: document.getElementById("name").value,
+      contact: document.getElementById("contact").value
+    };
+
+    tg.sendData(JSON.stringify(data));
+    tg.close();
+  }
 </script>
 
 </body>
