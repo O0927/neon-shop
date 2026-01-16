@@ -1,63 +1,246 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <title>Neon Shop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Neon Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Telegram WebApp API -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
-      padding: 20px;
-    }
+        body {
+            background: #fff;
+            color: #111;
+        }
 
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 8px;
-      border: none;
-      font-size: 16px;
-    }
+        /* ===== HEADER ===== */
+        header {
+            border-bottom: 1px solid #e5e5e5;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    button {
-      background: #00ffcc;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #00cfcf;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #111;
+            font-size: 15px;
+        }
+
+        /* BURGER */
+        .burger {
+            display: none;
+            font-size: 26px;
+            cursor: pointer;
+        }
+
+        /* ===== MAIN ===== */
+        main {
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            border: 1px solid #e5e5e5;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .image {
+            background: #e0e0e0;
+            height: 200px;
+        }
+
+        .card-title {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            padding: 25px;
+            transition: right 0.3s ease;
+            z-index: 1000;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-item {
+            font-size: 18px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .arrow {
+            color: #999;
+        }
+
+        .account {
+            margin-top: 40px;
+        }
+
+        .account h3 {
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #00d1c7;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-outline {
+            background: #fff;
+            color: #00d1c7;
+            border: 2px solid #00d1c7;
+        }
+
+        .language {
+            margin-top: 30px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .burger {
+                display: block;
+            }
+
+            main {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<h2>🛒 Замовлення LED-вивіски</h2>
+<header>
+    <div class="logo">NEON DEMO</div>
 
-<input id="product" placeholder="Назва товару">
-<input id="name" placeholder="Ваше імʼя">
-<input id="contact" placeholder="Телефон / Telegram">
+    <nav>
+        <a>Магазин</a>
+        <a>Продукція</a>
+        <a>Інформація</a>
+        <a>Контакти</a>
+    </nav>
 
-<button onclick="sendData()">Надіслати</button>
+    <div class="burger" id="burger">☰</div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-item">Магазин</div>
+    <div class="mobile-item">Корпоративні подарунки</div>
+
+    <div class="mobile-item">
+        Продукція <span class="arrow">›</span>
+    </div>
+
+    <div class="mobile-item">Роботи</div>
+
+    <div class="mobile-item">
+        Інформація <span class="arrow">›</span>
+    </div>
+
+    <div class="mobile-item">Контакти</div>
+
+    <div class="account">
+        <h3>Мій рахунок</h3>
+        <button class="btn btn-primary">Авторизуватися</button>
+        <button class="btn btn-outline">Зареєструватися</button>
+    </div>
+
+    <div class="language">
+        Українська ⌄
+    </div>
+</div>
+
+<main>
+    <h1>Всі колекції</h1>
+
+    <div class="grid">
+        <div class="card">
+            <div class="image"></div>
+            <div class="card-title">LED Friday <span>79</span></div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="card-title">Подарункові сертифікати <span>4</span></div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="card-title">Популярні <span>25</span></div>
+        </div>
+        <div class="card">
+            <div class="image"></div>
+            <div class="card-title">Вуличні вивіски <span>18</span></div>
+        </div>
+    </div>
+</main>
 
 <script>
-  const tg = window.Telegram.WebApp;
-  tg.expand(); // розгортає Web App на весь екран
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
 
-  function sendData() {
-    const data = {
-      product: document.getElementById("product").value,
-      name: document.getElementById("name").value,
-      contact: document.getElementById("contact").value
-    };
-
-    tg.sendData(JSON.stringify(data));
-    tg.close();
-  }
+    burger.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+    });
 </script>
 
 </body>
 </html>
+
