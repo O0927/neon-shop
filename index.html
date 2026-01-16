@@ -18,7 +18,6 @@
             color: #111;
         }
 
-        /* ===== HEADER ===== */
         header {
             border-bottom: 1px solid #e5e5e5;
             padding: 15px 25px;
@@ -42,16 +41,15 @@
             text-decoration: none;
             color: #111;
             font-size: 15px;
+            cursor: pointer;
         }
 
-        /* BURGER */
         .burger {
             display: none;
             font-size: 26px;
             cursor: pointer;
         }
 
-        /* ===== MAIN ===== */
         main {
             padding: 40px;
         }
@@ -88,12 +86,29 @@
             justify-content: space-between;
         }
 
-        /* ===== MOBILE MENU ===== */
+        /* OVERLAY */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 999;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* MOBILE MENU */
         .mobile-menu {
             position: fixed;
             top: 0;
             right: -100%;
-            width: 100%;
+            width: 85%;
+            max-width: 400px;
             height: 100%;
             background: #fff;
             padding: 25px;
@@ -105,12 +120,20 @@
             right: 0;
         }
 
+        .close {
+            font-size: 26px;
+            text-align: right;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
         .mobile-item {
             font-size: 18px;
             padding: 15px 0;
             border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
+            cursor: pointer;
         }
 
         .arrow {
@@ -150,16 +173,13 @@
             margin-top: 30px;
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             nav {
                 display: none;
             }
-
             .burger {
                 display: block;
             }
-
             main {
                 padding: 20px;
             }
@@ -181,21 +201,16 @@
     <div class="burger" id="burger">☰</div>
 </header>
 
-<!-- MOBILE MENU -->
+<div class="menu-overlay" id="overlay"></div>
+
 <div class="mobile-menu" id="mobileMenu">
+    <div class="close" id="closeMenu">✕</div>
+
     <div class="mobile-item">Магазин</div>
     <div class="mobile-item">Корпоративні подарунки</div>
-
-    <div class="mobile-item">
-        Продукція <span class="arrow">›</span>
-    </div>
-
+    <div class="mobile-item">Продукція <span class="arrow">›</span></div>
     <div class="mobile-item">Роботи</div>
-
-    <div class="mobile-item">
-        Інформація <span class="arrow">›</span>
-    </div>
-
+    <div class="mobile-item">Інформація <span class="arrow">›</span></div>
     <div class="mobile-item">Контакти</div>
 
     <div class="account">
@@ -204,43 +219,53 @@
         <button class="btn btn-outline">Зареєструватися</button>
     </div>
 
-    <div class="language">
-        Українська ⌄
-    </div>
+    <div class="language">Українська ⌄</div>
 </div>
 
 <main>
     <h1>Всі колекції</h1>
 
     <div class="grid">
-        <div class="card">
-            <div class="image"></div>
-            <div class="card-title">LED Friday <span>79</span></div>
-        </div>
-        <div class="card">
-            <div class="image"></div>
-            <div class="card-title">Подарункові сертифікати <span>4</span></div>
-        </div>
-        <div class="card">
-            <div class="image"></div>
-            <div class="card-title">Популярні <span>25</span></div>
-        </div>
-        <div class="card">
-            <div class="image"></div>
-            <div class="card-title">Вуличні вивіски <span>18</span></div>
-        </div>
+        <div class="card"><div class="image"></div><div class="card-title">LED Friday <span>79</span></div></div>
+        <div class="card"><div class="image"></div><div class="card-title">Подарункові сертифікати <span>4</span></div></div>
+        <div class="card"><div class="image"></div><div class="card-title">Популярні <span>25</span></div></div>
+        <div class="card"><div class="image"></div><div class="card-title">Вуличні вивіски <span>18</span></div></div>
     </div>
 </main>
 
 <script>
-    const burger = document.getElementById('burger');
-    const mobileMenu = document.getElementById('mobileMenu');
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+const overlay = document.getElementById('overlay');
+const closeMenu = document.getElementById('closeMenu');
+const menuItems = document.querySelectorAll('.mobile-item');
 
-    burger.addEventListener('click', () => {
-        mobileMenu.classList.toggle('active');
-    });
+function openMenu() {
+    mobileMenu.classList.add('active');
+    overlay.classList.add('active');
+}
+
+function closeMobileMenu() {
+    mobileMenu.classList.remove('active');
+    overlay.classList.remove('active');
+}
+
+burger.addEventListener('click', openMenu);
+closeMenu.addEventListener('click', closeMobileMenu);
+overlay.addEventListener('click', closeMobileMenu);
+
+// 🔥 КЛІК НА ПУНКТ → ЗАКРИВАЄ КАТАЛОГ
+menuItems.forEach(item => {
+    item.addEventListener('click', closeMobileMenu);
+});
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMobileMenu();
+});
 </script>
 
 </body>
 </html>
+
+
 
