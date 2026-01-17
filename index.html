@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web App</title>
+    <title>Rize Shop</title>
 
     <style>
         * {
@@ -13,13 +13,11 @@
             font-family: Arial, sans-serif;
         }
 
-        /* ===== КОЛЬОРИ ТА СИЛА ПІДСВІТКИ ===== */
         :root {
             --c1: #1C1C1C;
             --c2: #4B5563;
             --c3: #7e7e7e;
 
-            /* 👇 МІНЯЙ ТУТ (0 – 1) */
             --glow-header-opacity: 0.25;
             --glow-card-opacity: 0.2;
         }
@@ -45,7 +43,6 @@
             transition: transform 0.35s ease-in-out;
         }
 
-        /* ЛЕГКА ПІДСВІТКА */
         .header::after {
             content: "";
             position: absolute;
@@ -67,7 +64,6 @@
         .cart-btn {
             font-size: 24px;
             cursor: pointer;
-            color: #17212b;
         }
 
         .logo {
@@ -86,6 +82,8 @@
             background: #FFFFFF;
             transition: left 0.3s ease;
             z-index: 1002;
+            display: flex;
+            flex-direction: column;
         }
 
         .menu.open {
@@ -93,16 +91,40 @@
         }
 
         .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 16px;
-            font-weight: bold;
             border-bottom: 1px solid #f2f3f6;
+            font-weight: bold;
             color: #4B5563;
         }
 
-        .menu-content div {
+        .close-btn {
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .menu-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-content button {
+            width: 100%;
+            background: none;
+            border: none;
             padding: 16px;
+            text-align: left;   /* 👈 ЛІВО */
+            font-size: 16px;
+            cursor: pointer;
             border-bottom: 1px solid #f2f3f6;
             color: #181f28;
+        }
+
+
+        .menu-content button:hover {
+            background: #f7f7f7;
         }
 
         /* OVERLAY */
@@ -134,14 +156,12 @@
             color: #4B5563;
         }
 
-        /* GRID */
         .products {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 14px;
         }
 
-        /* PRODUCT */
         .product {
             position: relative;
             background: #FFFFFF;
@@ -150,24 +170,19 @@
             overflow: hidden;
         }
 
-        /* АКУРАТНА РАМКА */
         .product::after {
             content: "";
             position: absolute;
             inset: 0;
             border-radius: 12px;
             border: 1px solid transparent;
-
-            background:
-                    linear-gradient(
-                            135deg,
-                            var(--c1),
-                            var(--c2),
-                            var(--c3),
-                            var(--c1)
-                    ) border-box;
-
-            background-clip: border-box;
+            background: linear-gradient(
+                    135deg,
+                    var(--c1),
+                    var(--c2),
+                    var(--c3),
+                    var(--c1)
+            ) border-box;
             opacity: var(--glow-card-opacity);
             pointer-events: none;
         }
@@ -176,7 +191,6 @@
             width: 100%;
             aspect-ratio: 1 / 1;
             object-fit: cover;
-            display: block;
         }
 
         .product-info {
@@ -184,13 +198,23 @@
             justify-content: space-between;
             padding: 10px;
             font-size: 14px;
-            color: #17212b;
         }
 
         .product-value {
             font-weight: bold;
-            color: #1C1C1C;
         }
+        .cart-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-btn img {
+            width: 26px;
+            height: 26px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 
@@ -198,28 +222,39 @@
 
 <div class="header">
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
-    <div class="logo">LOGO</div>
-    <div class="cart-btn">🛒</div>
+    <div class="logo">RIZE</div>
+    <a href="index.html" class="cart-btn">
+        <img src="main-menu/logoc.jpg" alt="Корзина">
+    </a>
+
 </div>
 
 <div class="menu" id="menu">
-    <div class="menu-header">Каталог</div>
+    <div class="menu-header">
+        <span>Меню</span>
+        <span class="close-btn" onclick="toggleMenu()">✕</span>
+    </div>
+
     <div class="menu-content">
-        <div>Текст 1</div>
-        <div>Текст 2</div>
-        <div>Текст 3</div>
+        <button onclick="location.href='index.html'">Каталог</button>
+        <button onclick="location.href='index.html'">Товар1</button>
+        <button onclick="location.href='index.html'">Товар2</button>
+        <button onclick="location.href='index.html'">Товар3</button>
+        <button onclick="location.href='index.html'">Товар4</button>
+        <button onclick="location.href='index.html'">Корзина</button>
+        <button onclick="location.href='index.html'">Підтримка</button>
+        <button onclick="location.href='index.html'">Соцсети</button>
     </div>
 </div>
 
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
 <div class="content">
-    <div class="store-title">Назва магазина</div>
     <div class="store-title">Каталог</div>
 
     <div class="products">
         <div class="product">
-            <img src="main menu/img_3.png">
+            <img src="main-menu/Catalogue2.png">
             <div class="product-info">
                 <span>Товар 1</span>
                 <span class="product-value">100</span>
@@ -227,21 +262,23 @@
         </div>
 
         <div class="product">
-            <img src="main menu/img_1.png">
+            <img src="main-menu/Catalogue3.png">
             <div class="product-info">
                 <span>Товар 2</span>
                 <span class="product-value">250</span>
             </div>
         </div>
+
         <div class="product">
-            <img src="main menu/img_2.png">
+            <img src="main-menu/Catalogue1.png">
             <div class="product-info">
                 <span>Товар 3</span>
                 <span class="product-value">250</span>
             </div>
         </div>
+
         <div class="product">
-            <img src="main menu/img.png">
+            <img src="main-menu/Catalogue4.png">
             <div class="product-info">
                 <span>Товар 4</span>
                 <span class="product-value">250</span>
@@ -254,7 +291,6 @@
     const menu = document.getElementById('menu');
     const overlay = document.getElementById('overlay');
     const header = document.querySelector('.header');
-
     let lastScroll = 0;
 
     function toggleMenu() {
@@ -264,16 +300,13 @@
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
-        if (currentScroll > lastScroll && currentScroll > 80) {
-            header.style.transform = 'translateY(-100%)';
-        } else {
-            header.style.transform = 'translateY(0)';
-        }
+        header.style.transform =
+            currentScroll > lastScroll && currentScroll > 80
+                ? 'translateY(-100%)'
+                : 'translateY(0)';
         lastScroll = currentScroll;
     });
 </script>
 
 </body>
 </html>
-
-
