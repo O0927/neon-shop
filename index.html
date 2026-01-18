@@ -349,6 +349,57 @@
         .close-btn:hover{
             transform:rotate(90deg);
         }
+        .footer-menu{
+            list-style:none;
+            display:flex;
+            flex-direction:column;
+            gap:10px; /* ідеальна відстань */
+        }
+
+        .footer-menu li{
+            font-size:14px;
+            color:#ccc;
+            padding-left:6px;
+            cursor:pointer;
+            transition:.25s;
+        }
+
+        .footer-menu li:hover{
+            color:#fff;
+            transform:translateX(4px);
+        }
+        .footer-menu{
+            list-style:none;
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+        }
+
+        .footer-menu li{
+            font-size:14px;
+            color:#cfcfcf;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            cursor:pointer;
+            transition:.25s;
+        }
+
+        .footer-menu li i{
+            width:18px;
+            color:#9ca3af;
+        }
+
+        .footer-menu li:hover{
+            color:#fff;
+            transform:translateX(4px);
+        }
+
+        .footer-menu li:hover i{
+            color:#fff;
+        }
+
+
 
 
     </style>
@@ -376,10 +427,10 @@
 
     <div class="menu-content">
         <button onclick="go()"><i class="fa-solid fa-store"></i> Каталог</button>
-        <button onclick="go()"><i class="fa-solid fa-box"></i> Товар1</button>
-        <button onclick="go()"><i class="fa-solid fa-box"></i> Товар2</button>
-        <button onclick="go()"><i class="fa-solid fa-box"></i> Товар3</button>
-        <button onclick="go()"><i class="fa-solid fa-box"></i> Товар4</button>
+        <button onclick="go()"><i class="fa-solid fa-box"></i> LED neon</button>
+        <button onclick="go()"><i class="fa-solid fa-box"></i> Стікери для вітрини</button>
+        <button onclick="go()"><i class="fa-solid fa-box"></i> Заказати "LED neon"</button>
+        <button onclick="go()"><i class="fa-solid fa-box"></i> Заказати "Стікери для вітрини"</button>
         <button onclick="go()"><i class="fa-solid fa-cart-shopping"></i> Корзина</button>
         <button onclick="go()"><i class="fa-solid fa-headset"></i> Підтримка</button>
         <button onclick="go()"><i class="fa-solid fa-share-nodes"></i> Соцсети</button>
@@ -394,34 +445,50 @@
 
     <div class="products">
         <div class="product">
-            <img src="main-menu/Catalogue2.png" alt="Товар 1" loading="lazy">
+            <img src="main-menu/Catalogue2.jfif" alt="LED neon" loading="lazy">
             <div class="product-info">
-                <span>Товар 1</span>
-                <span class="product-value">100 ₴</span>
+                <span>LED neon</span>
+                <span class="product-value">100</span>
             </div>
         </div>
 
         <div class="product">
             <img src="main-menu/Catalogue3.png" alt="Товар 2" loading="lazy">
             <div class="product-info">
-                <span>Товар 2</span>
-                <span class="product-value">250 ₴</span>
+                <span>Стікери для вітрини</span>
+                <span class="product-value">100</span>
             </div>
         </div>
 
         <div class="product">
-            <img src="main-menu/Catalogue1.png" alt="Товар 3" loading="lazy">
+            <img src="main-menu/Catalogue1.webp" alt="Товар 3" loading="lazy">
             <div class="product-info">
-                <span>Товар 3</span>
-                <span class="product-value">250 ₴</span>
+                <span>Заказати "LED neon"</span>
+                <span class="product-value"></span>
             </div>
         </div>
 
         <div class="product">
-            <img src="main-menu/Catalogue4.png" alt="Товар 4" loading="lazy">
+            <img src="main-menu/Catalogue4.webp" alt="Товар 4" loading="lazy">
             <div class="product-info">
-                <span>Товар 4</span>
-                <span class="product-value">250 ₴</span>
+                <span>Заказати "Стікери для вітрини"</span>
+                <span class="product-value"></span>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="main-menu/Catalogue6.webp" alt="Товар 5" loading="lazy">
+            <div class="product-info">
+                <span></span>
+                <span class="product-value"></span>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="main-menu/Catalogue5.webp" alt="Товар 6" loading="lazy">
+            <div class="product-info">
+                <span></span>
+                <span class="product-value"></span>
             </div>
         </div>
     </div>
@@ -431,18 +498,18 @@
     <div class="footer-container">
 
         <div>
-            <h4>Каталог</h4>
-            <ul>
-                <li>Головне</li>
-                <li>Товар1</li>
-                <li>Товар2</li>
-                <li>Товар3</li>
-                <li>Товар4</li>
-                <li>Корзина</li>
-                <li>Підтримка</li>
-                <li>Соцсети</li>
+            <h4>Меню</h4>
+            <ul class="footer-menu">
+                <li><i class="fa-solid fa-store"></i> Каталог</li>
+                <li><i class="fa-solid fa-box"></i> LED neon</li>
+                <li><i class="fa-solid fa-box"></i> Стікери для вітрини</li>
+                <li><i class="fa-solid fa-box"></i> Заказати "LED neon"</li>
+                <li><i class="fa-solid fa-box"></i> Заказати "Стікери"</li>
+                <li><i class="fa-solid fa-cart-shopping"></i> Корзина</li>
+                <li><i class="fa-solid fa-headset"></i> Підтримка</li>
             </ul>
         </div>
+
 
         <div>
             <h4>Контакти</h4>
@@ -459,7 +526,6 @@
                 <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
                 <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
             </div>
         </div>
 
