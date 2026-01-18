@@ -51,43 +51,119 @@
         .menu-btn,.cart-btn{font-size:24px;cursor:pointer}
         .logo{font-weight:bold;font-size:18px;color:#4B5563}
 
-        /* MENU */
+        /* MENU – RIZE STYLE */
         .menu{
             position:fixed;
             top:0;
             left:-80vw;
             width:80vw;
+            max-width:360px;
             height:100vh;
             background:#fff;
-            transition:.3s;
             z-index:1002;
             display:flex;
             flex-direction:column;
+            transition:.35s cubic-bezier(.4,0,.2,1);
+            box-shadow:4px 0 20px rgba(0,0,0,.08);
         }
 
         .menu.open{left:0}
 
         .menu-header{
+            padding:16px 18px;
             display:flex;
             justify-content:space-between;
             align-items:center;
-            padding:16px;
-            border-bottom:1px solid #eee;
             font-weight:bold;
+            font-size:16px;
+            color:#4B5563;
+            position:relative;
+        }
+
+        .menu-header::after{
+            content:"";
+            position:absolute;
+            bottom:0;
+            left:0;
+            width:100%;
+            height:2px;
+            background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+        }
+
+        .menu-content{
+            padding:12px 0;
+            display:flex;
+            flex-direction:column;
         }
 
         .menu-content button{
-            width:100%;
             background:none;
             border:none;
-            padding:16px;
+            padding:14px 22px;
+            font-size:15px;
             text-align:left;
-            font-size:16px;
             cursor:pointer;
-            border-bottom:1px solid #f2f3f6;
+            color:#181f28;
+            position:relative;
+            transition:.25s;
         }
 
-        .menu-content button:hover{background:#f7f7f7}
+        .menu-content button::before{
+            content:"";
+            position:absolute;
+            left:0;
+            top:0;
+            height:100%;
+            width:4px;
+            background:linear-gradient(var(--c1),var(--c2),var(--c3));
+            opacity:0;
+            transition:.25s;
+        }
+
+        .menu-content button:hover{
+            padding-left:28px;
+            color:#000;
+        }
+
+        .menu-content button:hover::before{
+            opacity:1;
+        }
+        /* MENU ITEMS ANIMATION */
+        .menu-content button{
+            opacity:0;
+            transform:translateX(-10px);
+            transition:
+                    opacity .35s ease,
+                    transform .35s ease;
+        }
+
+        /* коли меню відкрите */
+        .menu.open .menu-content button{
+            opacity:1;
+            transform:translateX(0);
+        }
+
+        /* затримка для кожного пункту */
+        .menu.open .menu-content button:nth-child(1){transition-delay:.40s}
+        .menu.open .menu-content button:nth-child(2){transition-delay:.45s}
+        .menu.open .menu-content button:nth-child(3){transition-delay:.50s}
+        .menu.open .menu-content button:nth-child(4){transition-delay:.55s}
+        .menu.open .menu-content button:nth-child(5){transition-delay:.60s}
+        .menu.open .menu-content button:nth-child(6){transition-delay:.65s}
+        .menu.open .menu-content button:nth-child(7){transition-delay:.70s}
+        .menu.open .menu-content button:nth-child(8){transition-delay:.75s}
+
+
+        .close-btn{
+            font-size:22px;
+            cursor:pointer;
+            transition:.2s;
+        }
+
+        .close-btn:hover{
+            transform:rotate(90deg);
+        }
+
 
         /* OVERLAY */
         .overlay{
@@ -212,6 +288,68 @@
             transform:translateY(-4px) scale(1.05);
             background:#eaeaea;
         }
+        /* BURGER BUTTON */
+        .menu-btn{
+            width:28px;
+            height:20px;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+            cursor:pointer;
+        }
+
+        .menu-btn span{
+            height:3px;
+            width:100%;
+            background:#4B5563;
+            border-radius:2px;
+            transition:.35s cubic-bezier(.4,0,.2,1);
+        }
+
+        /* бургер → хрестик */
+        .menu.open ~ .header .menu-btn span:nth-child(1),
+        .menu-btn.active span:nth-child(1){
+            transform:rotate(45deg) translate(5px,5px);
+        }
+
+        .menu.open ~ .header .menu-btn span:nth-child(2),
+        .menu-btn.active span:nth-child(2){
+            opacity:0;
+        }
+
+        .menu.open ~ .header .menu-btn span:nth-child(3),
+        .menu-btn.active span:nth-child(3){
+            transform:rotate(-45deg) translate(6px,-6px);
+        }
+
+        /* CLOSE BUTTON (в меню) */
+        .close-btn{
+            width:24px;
+            height:24px;
+            position:relative;
+            cursor:pointer;
+        }
+
+        .close-btn::before,
+        .close-btn::after{
+            content:"";
+            position:absolute;
+            top:50%;
+            left:0;
+            width:100%;
+            height:3px;
+            background:#4B5563;
+            border-radius:2px;
+            transition:.3s;
+        }
+
+        .close-btn::before{transform:rotate(45deg)}
+        .close-btn::after{transform:rotate(-45deg)}
+
+        .close-btn:hover{
+            transform:rotate(90deg);
+        }
+
 
     </style>
 </head>
@@ -219,7 +357,12 @@
 <body>
 
 <div class="header">
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    <div class="menu-btn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
     <div class="logo">RIZE</div>
     <div class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></div>
 </div>
@@ -227,19 +370,21 @@
 <div class="menu" id="menu">
     <div class="menu-header">
         <span>Меню</span>
-        <span onclick="toggleMenu()">✕</span>
+        <span class="close-btn" onclick="toggleMenu()"></span>
+
     </div>
 
     <div class="menu-content">
-        <button onclick="go()">Каталог</button>
-        <button onclick="go()">Товар1</button>
-        <button onclick="go()">Товар2</button>
-        <button onclick="go()">Товар3</button>
-        <button onclick="go()">Товар4</button>
-        <button onclick="go()">Корзина</button>
-        <button onclick="go()">Підтримка</button>
-        <button onclick="go()">Соцсети</button>
+        <button onclick="go()"><i class="fa-solid fa-store"></i> Каталог</button>
+        <button onclick="go()"><i class="fa-solid fa-box"></i> Товар1</button>
+        <button onclick="go()"><i class="fa-solid fa-box"></i> Товар2</button>
+        <button onclick="go()"><i class="fa-solid fa-box"></i> Товар3</button>
+        <button onclick="go()"><i class="fa-solid fa-box"></i> Товар4</button>
+        <button onclick="go()"><i class="fa-solid fa-cart-shopping"></i> Корзина</button>
+        <button onclick="go()"><i class="fa-solid fa-headset"></i> Підтримка</button>
+        <button onclick="go()"><i class="fa-solid fa-share-nodes"></i> Соцсети</button>
     </div>
+
 </div>
 
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
@@ -325,15 +470,20 @@
 <script>
     const menu=document.getElementById('menu');
     const overlay=document.getElementById('overlay');
+    const menuBtn = document.querySelector('.menu-btn');
 
     function toggleMenu(){
         menu.classList.toggle('open');
         overlay.classList.toggle('show');
+        menuBtn.classList.toggle('active');
     }
+
 
     function go(){
         toggleMenu();
     }
+
+
 </script>
 
 </body>
