@@ -5,218 +5,212 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rize Shop</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
+        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+
+        :root{
+            --c1:#1C1C1C;
+            --c2:#4B5563;
+            --c3:#7e7e7e;
         }
 
-        :root {
-            --c1: #1C1C1C;
-            --c2: #4B5563;
-            --c3: #7e7e7e;
-
-            --glow-header-opacity: 0.25;
-            --glow-card-opacity: 0.2;
-        }
-
-        body {
-            background: #FFFFFF;
-            color: #181f28;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+        body{
+            background:#fff;
+            color:#181f28;
+            user-select:none;
         }
 
         /* HEADER */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 56px;
-            background: #FFFFFF;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            z-index: 1001;
-            transition: transform 0.35s ease-in-out;
+        .header{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:56px;
+            background:#fff;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 16px;
+            z-index:1001;
+            transition:.3s;
         }
 
-        .header::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(
-                    90deg,
-                    var(--c1),
-                    var(--c2),
-                    var(--c3),
-                    var(--c1)
-            );
-            box-shadow: 0 0 6px rgba(0,0,0,var(--glow-header-opacity));
+        .header::after{
+            content:"";
+            position:absolute;
+            bottom:0;
+            left:0;
+            width:100%;
+            height:2px;
+            background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c1));
         }
 
-        .menu-btn,
-        .cart-btn {
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .logo {
-            font-weight: bold;
-            font-size: 18px;
-            color: #4B5563;
-        }
+        .menu-btn,.cart-btn{font-size:24px;cursor:pointer}
+        .logo{font-weight:bold;font-size:18px;color:#4B5563}
 
         /* MENU */
-        .menu {
-            position: fixed;
-            top: 0;
-            left: -80vw;
-            width: 80vw;
-            height: 100vh;
-            background: #FFFFFF;
-            transition: left 0.3s ease;
-            z-index: 1002;
-            display: flex;
-            flex-direction: column;
+        .menu{
+            position:fixed;
+            top:0;
+            left:-80vw;
+            width:80vw;
+            height:100vh;
+            background:#fff;
+            transition:.3s;
+            z-index:1002;
+            display:flex;
+            flex-direction:column;
         }
 
-        .menu.open {
-            left: 0;
+        .menu.open{left:0}
+
+        .menu-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:16px;
+            border-bottom:1px solid #eee;
+            font-weight:bold;
         }
 
-        .menu-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px;
-            border-bottom: 1px solid #f2f3f6;
-            font-weight: bold;
-            color: #4B5563;
+        .menu-content button{
+            width:100%;
+            background:none;
+            border:none;
+            padding:16px;
+            text-align:left;
+            font-size:16px;
+            cursor:pointer;
+            border-bottom:1px solid #f2f3f6;
         }
 
-        .close-btn {
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        .menu-content {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .menu-content button {
-            width: 100%;
-            background: none;
-            border: none;
-            padding: 16px;
-            text-align: left;   /* 👈 ЛІВО */
-            font-size: 16px;
-            cursor: pointer;
-            border-bottom: 1px solid #f2f3f6;
-            color: #181f28;
-        }
-
-
-        .menu-content button:hover {
-            background: #f7f7f7;
-        }
+        .menu-content button:hover{background:#f7f7f7}
 
         /* OVERLAY */
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.3);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-            z-index: 1000;
+        .overlay{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.3);
+            opacity:0;
+            pointer-events:none;
+            transition:.3s;
+            z-index:1000;
         }
 
-        .overlay.show {
-            opacity: 1;
-            pointer-events: auto;
+        .overlay.show{
+            opacity:1;
+            pointer-events:auto;
         }
 
         /* CONTENT */
-        .content {
-            padding: 80px 16px 24px;
+        .content{padding:80px 16px 24px}
+
+        .store-title{
+            text-align:center;
+            font-size:22px;
+            font-weight:bold;
+            margin-bottom:16px;
+            color:#4B5563;
         }
 
-        .store-title {
-            text-align: center;
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 16px;
-            color: #4B5563;
+        .products{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:14px;
         }
 
-        .products {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
+        .product{
+            background:#fff;
+            border-radius:12px;
+            box-shadow:0 4px 12px rgba(0,0,0,.1);
+            overflow:hidden;
+            transition:.3s;
         }
 
-        .product {
-            position: relative;
-            background: #FFFFFF;
-            border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-            overflow: hidden;
+        .product:hover{transform:translateY(-4px)}
+
+        .product img{
+            width:100%;
+            aspect-ratio:1/1;
+            object-fit:cover;
         }
 
-        .product::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 12px;
-            border: 1px solid transparent;
-            background: linear-gradient(
-                    135deg,
-                    var(--c1),
-                    var(--c2),
-                    var(--c3),
-                    var(--c1)
-            ) border-box;
-            opacity: var(--glow-card-opacity);
-            pointer-events: none;
+        .product-info{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:10px;
+            font-size:14px;
         }
 
-        .product img {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
+        .product-value{
+            font-weight:bold;
         }
 
-        .product-info {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            font-size: 14px;
+        /* FOOTER FIX */
+        .footer{
+            background:#000;
+            color:#fff;
+            padding:56px 16px 32px;
+            margin-top:56px;
         }
 
-        .product-value {
-            font-weight: bold;
-        }
-        .cart-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .footer-container{
+            max-width:1100px;
+            margin:auto;
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+            gap:48px;
         }
 
-        .cart-btn img {
-            width: 26px;
-            height: 26px;
-            cursor: pointer;
+        .footer h4{
+            margin-bottom:18px;
+            font-size:16px;
+            letter-spacing:.5px;
+        }
+
+        .footer ul{
+            list-style:none;
+        }
+
+        .footer ul li{
+            margin-bottom:14px;   /* ⬅ нормальна відстань */
+            font-size:14px;
+            color:#cfcfcf;
+            line-height:1.6;
+        }
+
+        .footer-contacts{
+            font-size:14px;
+            color:#cfcfcf;
+            line-height:1.8;
+        }
+
+        .footer-socials{
+            margin-top:18px;
+            display:flex;
+            gap:18px;
+        }
+
+        .footer-socials a{
+            width:48px;
+            height:48px;
+            background:#fff;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#000;
+            font-size:22px;
+            transition:.3s;
+        }
+
+        .footer-socials a:hover{
+            transform:translateY(-4px) scale(1.05);
+            background:#eaeaea;
         }
 
     </style>
@@ -227,27 +221,24 @@
 <div class="header">
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
     <div class="logo">RIZE</div>
-    <a href="index.html" class="cart-btn">
-        <img src="main-menu/logoc.jpg" alt="Корзина">
-    </a>
-
+    <div class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></div>
 </div>
 
 <div class="menu" id="menu">
     <div class="menu-header">
         <span>Меню</span>
-        <span class="close-btn" onclick="toggleMenu()">✕</span>
+        <span onclick="toggleMenu()">✕</span>
     </div>
 
     <div class="menu-content">
-        <button onclick="location.href='index.html'">Каталог</button>
-        <button onclick="location.href='index.html'">Товар1</button>
-        <button onclick="location.href='index.html'">Товар2</button>
-        <button onclick="location.href='index.html'">Товар3</button>
-        <button onclick="location.href='index.html'">Товар4</button>
-        <button onclick="location.href='index.html'">Корзина</button>
-        <button onclick="location.href='index.html'">Підтримка</button>
-        <button onclick="location.href='index.html'">Соцсети</button>
+        <button onclick="go()">Каталог</button>
+        <button onclick="go()">Товар1</button>
+        <button onclick="go()">Товар2</button>
+        <button onclick="go()">Товар3</button>
+        <button onclick="go()">Товар4</button>
+        <button onclick="go()">Корзина</button>
+        <button onclick="go()">Підтримка</button>
+        <button onclick="go()">Соцсети</button>
     </div>
 </div>
 
@@ -258,60 +249,92 @@
 
     <div class="products">
         <div class="product">
-            <img src="main-menu/Catalogue2.png">
+            <img src="main-menu/Catalogue2.png" alt="Товар 1" loading="lazy">
             <div class="product-info">
                 <span>Товар 1</span>
-                <span class="product-value">100</span>
+                <span class="product-value">100 ₴</span>
             </div>
         </div>
 
         <div class="product">
-            <img src="main-menu/Catalogue3.png">
+            <img src="main-menu/Catalogue3.png" alt="Товар 2" loading="lazy">
             <div class="product-info">
                 <span>Товар 2</span>
-                <span class="product-value">250</span>
+                <span class="product-value">250 ₴</span>
             </div>
         </div>
 
         <div class="product">
-            <img src="main-menu/Catalogue1.png">
+            <img src="main-menu/Catalogue1.png" alt="Товар 3" loading="lazy">
             <div class="product-info">
                 <span>Товар 3</span>
-                <span class="product-value">250</span>
+                <span class="product-value">250 ₴</span>
             </div>
         </div>
 
         <div class="product">
-            <img src="main-menu/Catalogue4.png">
+            <img src="main-menu/Catalogue4.png" alt="Товар 4" loading="lazy">
             <div class="product-info">
                 <span>Товар 4</span>
-                <span class="product-value">250</span>
+                <span class="product-value">250 ₴</span>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    const menu = document.getElementById('menu');
-    const overlay = document.getElementById('overlay');
-    const header = document.querySelector('.header');
-    let lastScroll = 0;
+<footer class="footer">
+    <div class="footer-container">
 
-    function toggleMenu() {
+        <div>
+            <h4>Каталог</h4>
+            <ul>
+                <li>Головне</li>
+                <li>Товар1</li>
+                <li>Товар2</li>
+                <li>Товар3</li>
+                <li>Товар4</li>
+                <li>Корзина</li>
+                <li>Підтримка</li>
+                <li>Соцсети</li>
+            </ul>
+        </div>
+
+        <div>
+            <h4>Контакти</h4>
+            <div class="footer-contacts">
+                Телефон: +380*********<br>
+                E-mail: буде
+            </div>
+        </div>
+
+        <div>
+            <h4>Соцмережі</h4>
+            <div class="footer-socials">
+                <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+
+<script>
+    const menu=document.getElementById('menu');
+    const overlay=document.getElementById('overlay');
+
+    function toggleMenu(){
         menu.classList.toggle('open');
         overlay.classList.toggle('show');
     }
 
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        header.style.transform =
-            currentScroll > lastScroll && currentScroll > 80
-                ? 'translateY(-100%)'
-                : 'translateY(0)';
-        lastScroll = currentScroll;
-    });
+    function go(){
+        toggleMenu();
+    }
 </script>
 
 </body>
 </html>
-
