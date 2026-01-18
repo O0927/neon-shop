@@ -397,6 +397,36 @@
         .back-btn{
             font-weight:bold;
         }
+        /* FOOTER LINKS FIX */
+        .footer-menu li a {
+            color: #fff;           /* білий колір тексту */
+            text-decoration: none; /* прибираємо підкреслення */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.25s;
+        }
+
+        .footer-menu li a:hover {
+            transform: translateX(4px);
+            color: #fff;           /* залишається білим при наведенні */
+        }
+
+        .footer-menu li a i {
+            width: 18px;
+            color: #9ca3af;        /* іконки світліші */
+            transition: 0.25s;
+        }
+
+        .footer-menu li a:hover i {
+            color: #fff;           /* іконка стає білою при наведенні */
+        }
+
+        /* Для відвіданих посилань */
+        .footer-menu li a:visited {
+            color: #fff;
+        }
+
     </style>
 </head>
 
@@ -421,15 +451,17 @@
 
     <!-- ГОЛОВНЕ МЕНЮ -->
     <div class="menu-content main-menu">
-        <button><i class="fa-solid fa-store"></i> Каталог</button>
-        <button><i class="fa-solid fa-box"></i> LED neon</button>
-        <button><i class="fa-solid fa-box"></i> Стікери для вітрини</button>
-        <button><i class="fa-solid fa-box"></i> Заказати "LED neon"</button>
-        <button><i class="fa-solid fa-box"></i> Заказати "Стікери для вітрини"</button>
-        <button><i class="fa-solid fa-cart-shopping"></i> Корзина</button>
-        <button onclick="openSocials()"><i class="fa-solid fa-share-nodes"></i> Соцсети</button>
-        <button onclick="openSupport()"><i class="fa-solid fa-headset"></i> Підтримка</button>
+        <a href="index.html"><button><i class="fa-solid fa-store"></i> Каталог</button></a>
+        <a href="#"><button><i class="fa-solid fa-box"></i> LED neon</button></a>
+        <a href="#"><button><i class="fa-solid fa-box"></i> Стікери для вітрини</button></a>
+        <a href="#"><button><i class="fa-solid fa-box"></i> Заказати "LED neon"</button></a>
+        <a href="#"><button><i class="fa-solid fa-box"></i> Заказати "Стікери для вітрини"</button></a>
+        <a href="#"><button><i class="fa-solid fa-cart-shopping"></i> Корзина</button></a>
+        <button onclick="window.location.href='#'"><i class="fa-solid fa-share-nodes"></i> Соцсети</button>
+        <button onclick="window.location.href='main-menu-html/Support.html'"><i class="fa-solid fa-headset"></i> Підтримка</button>
+
     </div>
+
 
     <!-- ПІДМЕНЮ СОЦСЕТІВ -->
     <div class="menu-content sub-menu">
@@ -505,13 +537,47 @@
         <div>
             <h4>Меню</h4>
             <ul class="footer-menu">
-                <li><i class="fa-solid fa-store"></i> Каталог</li>
-                <li><i class="fa-solid fa-box"></i> LED neon</li>
-                <li><i class="fa-solid fa-box"></i> Стікери для вітрини</li>
-                <li><i class="fa-solid fa-box"></i> Заказати "LED neon"</li>
-                <li><i class="fa-solid fa-box"></i> Заказати "Стікери"</li>
-                <li><i class="fa-solid fa-cart-shopping"></i> Корзина</li>
-                <li><i class="fa-solid fa-headset"></i> Підтримка</li>
+                <li>
+                    <a href="index.html">
+                        <i class="fa-solid fa-store"></i> Каталог
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-box"></i> LED neon
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-box"></i> Стікери для вітрини
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-box"></i> Заказати "LED neon"
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-box"></i> Заказати "Стікери"
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-cart-shopping"></i> Корзина
+                    </a>
+                </li>
+
+                <li>
+                    <a href="main-menu-html/Support.html">
+                        <i class="fa-solid fa-headset"></i> Підтримка
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -580,5 +646,9 @@
 
 </body>
 </html>
+
+</body>
+</html>
+
 
 
