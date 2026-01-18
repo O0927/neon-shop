@@ -65,6 +65,7 @@
             flex-direction:column;
             transition:.35s cubic-bezier(.4,0,.2,1);
             box-shadow:4px 0 20px rgba(0,0,0,.08);
+            overflow:hidden;
         }
 
         .menu.open{left:0}
@@ -153,7 +154,6 @@
         .menu.open .menu-content button:nth-child(7){transition-delay:.70s}
         .menu.open .menu-content button:nth-child(8){transition-delay:.75s}
 
-
         .close-btn{
             font-size:22px;
             cursor:pointer;
@@ -163,7 +163,6 @@
         .close-btn:hover{
             transform:rotate(90deg);
         }
-
 
         /* OVERLAY */
         .overlay{
@@ -253,7 +252,7 @@
         }
 
         .footer ul li{
-            margin-bottom:14px;   /* ⬅ нормальна відстань */
+            margin-bottom:14px;
             font-size:14px;
             color:#cfcfcf;
             line-height:1.6;
@@ -288,6 +287,7 @@
             transform:translateY(-4px) scale(1.05);
             background:#eaeaea;
         }
+
         /* BURGER BUTTON */
         .menu-btn{
             width:28px;
@@ -349,11 +349,12 @@
         .close-btn:hover{
             transform:rotate(90deg);
         }
+
         .footer-menu{
             list-style:none;
             display:flex;
             flex-direction:column;
-            gap:10px; /* ідеальна відстань */
+            gap:10px;
         }
 
         .footer-menu li{
@@ -368,40 +369,34 @@
             color:#fff;
             transform:translateX(4px);
         }
-        .footer-menu{
-            list-style:none;
-            display:flex;
-            flex-direction:column;
-            gap:14px;
-        }
-
-        .footer-menu li{
-            font-size:14px;
-            color:#cfcfcf;
-            display:flex;
-            align-items:center;
-            gap:10px;
-            cursor:pointer;
-            transition:.25s;
-        }
 
         .footer-menu li i{
             width:18px;
             color:#9ca3af;
         }
 
-        .footer-menu li:hover{
-            color:#fff;
-            transform:translateX(4px);
+        /* --- SUBMENU: справа → вліво --- */
+        .sub-menu{
+            position:absolute;
+            top:56px;
+            right:-100%;  /* стартує справа за межами меню */
+            width:100%;
+            height:calc(100% - 56px);
+            background:#fff;
+            transition:.35s cubic-bezier(.4,0,.2,1);
         }
 
-        .footer-menu li:hover i{
-            color:#fff;
+        .menu.show-sub .sub-menu{
+            right:0;  /* з’являється на місці */
         }
 
+        .menu.show-sub .main-menu{
+            transform:translateX(-100%);  /* головне меню зсувається вліво */
+        }
 
-
-
+        .back-btn{
+            font-weight:bold;
+        }
     </style>
 </head>
 
@@ -422,20 +417,30 @@
     <div class="menu-header">
         <span>Меню</span>
         <span class="close-btn" onclick="toggleMenu()"></span>
-
     </div>
 
-    <div class="menu-content">
-        <button onclick="go()"><i class="fa-solid fa-store"></i> Каталог</button>
-        <button onclick="go()"><i class="fa-solid fa-box"></i> LED neon</button>
-        <button onclick="go()"><i class="fa-solid fa-box"></i> Стікери для вітрини</button>
-        <button onclick="go()"><i class="fa-solid fa-box"></i> Заказати "LED neon"</button>
-        <button onclick="go()"><i class="fa-solid fa-box"></i> Заказати "Стікери для вітрини"</button>
-        <button onclick="go()"><i class="fa-solid fa-cart-shopping"></i> Корзина</button>
-        <button onclick="go()"><i class="fa-solid fa-headset"></i> Підтримка</button>
-        <button onclick="go()"><i class="fa-solid fa-share-nodes"></i> Соцсети</button>
+    <!-- ГОЛОВНЕ МЕНЮ -->
+    <div class="menu-content main-menu">
+        <button><i class="fa-solid fa-store"></i> Каталог</button>
+        <button><i class="fa-solid fa-box"></i> LED neon</button>
+        <button><i class="fa-solid fa-box"></i> Стікери для вітрини</button>
+        <button><i class="fa-solid fa-box"></i> Заказати "LED neon"</button>
+        <button><i class="fa-solid fa-box"></i> Заказати "Стікери для вітрини"</button>
+        <button><i class="fa-solid fa-cart-shopping"></i> Корзина</button>
+        <button onclick="openSocials()"><i class="fa-solid fa-share-nodes"></i> Соцсети</button>
     </div>
 
+    <!-- ПІДМЕНЮ СОЦСЕТІВ -->
+    <div class="menu-content sub-menu">
+        <button class="back-btn" onclick="closeSocials()">
+            <i class="fa-solid fa-arrow-left"></i> Назад
+        </button>
+
+        <button><i class="fab fa-telegram"></i> Telegram</button>
+        <button><i class="fab fa-instagram"></i> Instagram</button>
+        <button><i class="fab fa-youtube"></i> YouTube</button>
+        <button><i class="fab fa-tiktok"></i> TikTok</button>
+    </div>
 </div>
 
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
@@ -453,7 +458,7 @@
         </div>
 
         <div class="product">
-            <img src="main-menu/Catalogue3.png" alt="Товар 2" loading="lazy">
+            <img src="main-menu/Catalogue3.png" alt="Стікери для вітрини" loading="lazy">
             <div class="product-info">
                 <span>Стікери для вітрини</span>
                 <span class="product-value">100</span>
@@ -461,7 +466,7 @@
         </div>
 
         <div class="product">
-            <img src="main-menu/Catalogue1.webp" alt="Товар 3" loading="lazy">
+            <img src="main-menu/Catalogue1.webp" alt="LED neon" loading="lazy">
             <div class="product-info">
                 <span>Заказати "LED neon"</span>
                 <span class="product-value"></span>
@@ -469,25 +474,9 @@
         </div>
 
         <div class="product">
-            <img src="main-menu/Catalogue4.webp" alt="Товар 4" loading="lazy">
+            <img src="main-menu/Catalogue4.webp" alt="Стікери для вітрини" loading="lazy">
             <div class="product-info">
                 <span>Заказати "Стікери для вітрини"</span>
-                <span class="product-value"></span>
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="main-menu/Catalogue6.webp" alt="Товар 5" loading="lazy">
-            <div class="product-info">
-                <span></span>
-                <span class="product-value"></span>
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="main-menu/Catalogue5.webp" alt="Товар 6" loading="lazy">
-            <div class="product-info">
-                <span></span>
                 <span class="product-value"></span>
             </div>
         </div>
@@ -496,7 +485,6 @@
 
 <footer class="footer">
     <div class="footer-container">
-
         <div>
             <h4>Меню</h4>
             <ul class="footer-menu">
@@ -509,7 +497,6 @@
                 <li><i class="fa-solid fa-headset"></i> Підтримка</li>
             </ul>
         </div>
-
 
         <div>
             <h4>Контакти</h4>
@@ -528,29 +515,51 @@
                 <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
             </div>
         </div>
-
     </div>
 </footer>
 
-
 <script>
-    const menu=document.getElementById('menu');
-    const overlay=document.getElementById('overlay');
+    const menu = document.getElementById('menu');
+    const overlay = document.getElementById('overlay');
     const menuBtn = document.querySelector('.menu-btn');
 
+    // Відкриття / закриття головного меню
     function toggleMenu(){
-        menu.classList.toggle('open');
-        overlay.classList.toggle('show');
-        menuBtn.classList.toggle('active');
+        const isOpen = menu.classList.contains('open');
+
+        if(isOpen){
+            // Закриваємо меню і скидаємо підменю
+            menu.classList.remove('open');
+            menu.classList.remove('show-sub'); // ❌ скидаємо соцсети
+            overlay.classList.remove('show');
+            menuBtn.classList.remove('active');
+        } else {
+            // Відкриваємо меню
+            menu.classList.add('open');
+            overlay.classList.add('show');
+            menuBtn.classList.add('active');
+        }
     }
 
-
-    function go(){
-        toggleMenu();
+    // Переход на підменю соцмереж
+    function openSocials(){
+        menu.classList.add('show-sub');
     }
 
+    // Повернення назад з підменю соцмереж
+    function closeSocials(){
+        menu.classList.remove('show-sub');
+    }
 
+    // Закриваємо меню, якщо клік на overlay
+    overlay.addEventListener('click', toggleMenu);
+
+    // Можна додати, щоб кнопки в main-menu закривали меню (за потреби)
+    document.querySelectorAll('.main-menu button:not([onclick*="openSocials"])').forEach(btn=>{
+        btn.addEventListener('click', toggleMenu);
+    });
 </script>
+
 
 </body>
 </html>
