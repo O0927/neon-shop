@@ -218,6 +218,17 @@
             height: 26px;
             cursor: pointer;
         }
+        img {
+            -webkit-user-drag: none;   /* Chrome, Safari */
+            -khtml-user-drag: none;
+            -moz-user-drag: none;      /* Firefox */
+            -o-user-drag: none;
+            user-drag: none;
+
+            user-select: none;
+            pointer-events: auto;      /* кліки працюють */
+        }
+
 
     </style>
 </head>
@@ -228,7 +239,7 @@
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
     <div class="logo">RIZE</div>
     <a href="index.html" class="cart-btn">
-        <img src="main menu/logoc.jpg" alt="Корзина">
+        <img src="main-menu/logoc.jpg" alt="Корзина">
     </a>
 
 </div>
@@ -258,7 +269,7 @@
 
     <div class="products">
         <div class="product">
-            <img src="main menu/Catalogue2.png">
+            <img src="main-menu/Catalogue2.png">
             <div class="product-info">
                 <span>Товар 1</span>
                 <span class="product-value">100</span>
@@ -266,7 +277,7 @@
         </div>
 
         <div class="product">
-            <img src="main menu/Catalogue3.png">
+            <img src="main-menu/Catalogue3.png">
             <div class="product-info">
                 <span>Товар 2</span>
                 <span class="product-value">250</span>
@@ -274,7 +285,7 @@
         </div>
 
         <div class="product">
-            <img src="main menu/Catalogue1.png">
+            <img src="main-menu/Catalogue1.png">
             <div class="product-info">
                 <span>Товар 3</span>
                 <span class="product-value">250</span>
@@ -282,7 +293,7 @@
         </div>
 
         <div class="product">
-            <img src="main menu/Catalogue4.png">
+            <img src="main-menu/Catalogue4.png">
             <div class="product-info">
                 <span>Товар 4</span>
                 <span class="product-value">250</span>
@@ -310,9 +321,14 @@
                 : 'translateY(0)';
         lastScroll = currentScroll;
     });
+    document.querySelectorAll('img').forEach(img => {
+        img.setAttribute('draggable', 'false');
+    });
 </script>
 
 </body>
 </html>
+
+
 
 
