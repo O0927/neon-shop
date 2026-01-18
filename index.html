@@ -349,16 +349,14 @@
         }
     });
 
-    document.addEventListener('touchstart', e => {
-        if (e.target.tagName === 'IMG') {
-            e.preventDefault();
-        }
-    }, { passive: false });
-    document.addEventListener('touchstart', e => {
-        e.preventDefault();
-    }, { passive: false });
+    // Забороняємо тільки перетягування картинок
+    document.querySelectorAll('img').forEach(img => {
+        img.setAttribute('draggable', 'false');
+    });
+
+    // Ніякого глобального e.preventDefault для всього touchstart!
+
 </script>
 
 </body>
 </html>
-
