@@ -29,6 +29,10 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            webkit-user-select: none;
+            user-select: none;
+
+            -webkit-touch-callout: none; /* iOS */
         }
 
         /* HEADER */
@@ -235,6 +239,14 @@
 
             pointer-events: auto;/* кліки працюють */
         }
+        .menu-btn,
+        .close-btn,
+        .cart-btn,
+        .logo {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
 
 
     </style>
@@ -342,7 +354,11 @@
             e.preventDefault();
         }
     }, { passive: false });
+    document.addEventListener('touchstart', e => {
+        e.preventDefault();
+    }, { passive: false });
 </script>
 
 </body>
 </html>
+
