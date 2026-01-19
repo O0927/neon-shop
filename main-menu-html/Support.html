@@ -262,7 +262,81 @@
     .footer-menu li a:visited{
       color:#fff;
     }
+    /* === FAQ ACCORDION === */
+    .faq-item{
+      margin-top:12px;
+      border-radius:8px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+    }
 
+    .faq-question{
+      width:100%;
+      background:#4B5563;
+      color:#fff;
+      border:none;
+      padding:14px 16px;
+      font-size:15px;
+      font-weight:bold;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    .faq-question:hover{
+      background:#1C1C1C;
+    }
+
+    .faq-question i{
+      transition:.3s;
+    }
+
+    .faq-item.active .faq-question i{
+      transform:rotate(180deg);
+    }
+
+    .faq-answer{
+      max-height:0;
+      overflow:hidden;
+      background:#f9f9f9;
+      transition:max-height .35s ease;
+    }
+
+    .faq-answer p{
+      padding:14px 16px;
+      font-size:14px;
+      color:#4B5563;
+      line-height:1.6;
+    }
+    /* CART BUTTON FIX */
+    .cart-btn {
+      color: #000;                 /* чорний */
+      text-decoration: none;       /* прибирає підкреслення */
+      font-size: 24px;
+      transition:
+              transform 0.15s ease,
+              opacity 0.15s ease;
+    }
+
+    /* visited link — прибирає фіолетовий */
+    .cart-btn:visited {
+      color: #000;
+    }
+
+    /* hover — легке збільшення */
+    .cart-btn:hover {
+      transform: scale(1.1);
+      opacity: 0.85;
+    }
+
+    /* active (клік) — ефект натискання */
+    .cart-btn:active {
+      transform: scale(0.9);
+      opacity: 0.6;
+    }
 
   </style>
 </head>
@@ -277,7 +351,10 @@
     <span></span>
   </div>
   <div class="logo">RIZE</div>
-  <div class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></div>
+  <a href="basket.html" class="cart-btn">
+    <i class="fa-solid fa-cart-shopping"></i>
+  </a>
+
 </div>
 
 <!-- MENU -->
@@ -293,23 +370,23 @@
       <i class="fa-solid fa-store"></i> Каталог
     </button>
 
-    <button onclick="location.href='#'">
+    <button onclick="location.href='сatalogue-LED-neon.html'">
       <i class="fa-solid fa-box"></i> LED neon
     </button>
 
-    <button onclick="location.href='#'">
+    <button onclick="location.href='catalogue-stickers.html'">
       <i class="fa-solid fa-box"></i> Стікери для вітрини
     </button>
 
-    <button onclick="location.href='#'">
+    <button onclick="location.href='catalogue-by-LED-neon.html'">
       <i class="fa-solid fa-box"></i> Заказати "LED neon"
     </button>
 
-    <button onclick="location.href='#'">
+    <button onclick="location.href='catalogue-by-stickers.html'">
       <i class="fa-solid fa-box"></i> Заказати "Стікери для вітрини"
     </button>
 
-    <button onclick="location.href='#'">
+    <button onclick="location.href='basket.html'">
       <i class="fa-solid fa-cart-shopping"></i> Корзина
     </button>
 
@@ -318,7 +395,7 @@
       <i class="fa-solid fa-share-nodes"></i> Соцсети
     </button>
 
-    <button onclick="location.href='Support.html'">
+    <button onclick="location.href='#'">
       <i class="fa-solid fa-headset"></i> Підтримка
     </button>
   </div>
@@ -342,13 +419,49 @@
 
   <div class="support-section">
     <h2>FAQ</h2>
-    <p>Тут ви знайдете відповіді на найпоширеніші питання про наш магазин та товари:</p>
-    <ul>
-      <li>Як оформити замовлення?</li>
-      <li>Способи оплати</li>
-      <li>Доставка та терміни</li>
-    </ul>
+    <p>Тут ви знайдете відповіді на найпоширеніші питання:</p>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Як оформити замовлення?
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        <p>
+          Оберіть товар, натисніть «Замовити», заповніть контактні дані
+          та підтвердьте замовлення. Наш менеджер зв’яжеться з вами.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Які способи оплати доступні?
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        <p>
+          Оплата можлива карткою, переказом на IBAN або при отриманні
+          (за домовленістю).
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Доставка та терміни
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="faq-answer">
+        <p>
+          Виготовлення займає 1–3 дні. Доставка по Україні — 1–2 дні
+          службою «Нова Пошта».
+        </p>
+      </div>
+    </div>
+
   </div>
+
 
   <div class="support-section">
     <h2>Зв'язок з нами</h2>
@@ -388,37 +501,37 @@
         </li>
 
         <li>
-          <a href="led-neon.html">
+          <a href="сatalogue-LED-neon.html">
             <i class="fa-solid fa-box"></i> LED neon
           </a>
         </li>
 
         <li>
-          <a href="stickers.html">
+          <a href="catalogue-stickers.html">
             <i class="fa-solid fa-box"></i> Стікери для вітрини
           </a>
         </li>
 
         <li>
-          <a href="order-led.html">
+          <a href="catalogue-by-LED-neon.html">
             <i class="fa-solid fa-box"></i> Заказати "LED neon"
           </a>
         </li>
 
         <li>
-          <a href="order-stickers.html">
+          <a href="catalogue-by-stickers.html">
             <i class="fa-solid fa-box"></i> Заказати "Стікери"
           </a>
         </li>
 
         <li>
-          <a href="cart.html">
+          <a href="basket.html">
             <i class="fa-solid fa-cart-shopping"></i> Корзина
           </a>
         </li>
 
         <li>
-          <a href="support.html">
+          <a href="#">
             <i class="fa-solid fa-headset"></i> Підтримка
           </a>
         </li>
@@ -474,6 +587,23 @@
   document.querySelectorAll('.main-menu button:not([onclick*="openSocials"])').forEach(btn=>{
     btn.addEventListener('click', toggleMenu);
   });
+
+    document.querySelectorAll('.faq-question').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const item = btn.parentElement;
+      const answer = item.querySelector('.faq-answer');
+
+      if(item.classList.contains('active')){
+        answer.style.maxHeight = null;
+        item.classList.remove('active');
+      }else{
+        answer.style.maxHeight = answer.scrollHeight + "px";
+        item.classList.add('active');
+      }
+    });
+  });
+
+
 </script>
 
 </body>
