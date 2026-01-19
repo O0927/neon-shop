@@ -426,6 +426,49 @@
         .footer-menu li a:visited {
             color: #fff;
         }
+        /* CART BUTTON FIX */
+        .cart-btn {
+            color: #000;                 /* чорний */
+            text-decoration: none;       /* прибирає підкреслення */
+            font-size: 24px;
+            transition:
+                    transform 0.15s ease,
+                    opacity 0.15s ease;
+        }
+
+        /* visited link — прибирає фіолетовий */
+        .cart-btn:visited {
+            color: #000;
+        }
+
+        /* hover — легке збільшення */
+        .cart-btn:hover {
+            transform: scale(1.1);
+            opacity: 0.85;
+        }
+
+        /* active (клік) — ефект натискання */
+        .cart-btn:active {
+            transform: scale(0.9);
+            opacity: 0.6;
+        }
+        .product-link {
+            display: block;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .product-link:hover .product {
+            transform: scale(1.03);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+
+        .product {
+            transition: 0.25s ease;
+        }
+
+
+
 
     </style>
 </head>
@@ -440,7 +483,10 @@
     </div>
 
     <div class="logo">RIZE</div>
-    <div class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></div>
+    <a href="main-menu-html/basket.html" class="cart-btn">
+        <i class="fa-solid fa-cart-shopping"></i>
+    </a>
+
 </div>
 
 <div class="menu" id="menu">
@@ -451,12 +497,12 @@
 
     <!-- ГОЛОВНЕ МЕНЮ -->
     <div class="menu-content main-menu">
-        <a href="index.html"><button><i class="fa-solid fa-store"></i> Каталог</button></a>
-        <a href="#"><button><i class="fa-solid fa-box"></i> LED neon</button></a>
-        <a href="#"><button><i class="fa-solid fa-box"></i> Стікери для вітрини</button></a>
-        <a href="#"><button><i class="fa-solid fa-box"></i> Заказати "LED neon"</button></a>
-        <a href="#"><button><i class="fa-solid fa-box"></i> Заказати "Стікери для вітрини"</button></a>
-        <a href="#"><button><i class="fa-solid fa-cart-shopping"></i> Корзина</button></a>
+        <a href="#"><button><i class="fa-solid fa-store"></i> Каталог</button></a>
+        <a href="main-menu-html/сatalogue-LED-neon.html"><button><i class="fa-solid fa-box"></i> LED neon</button></a>
+        <a href="main-menu-html/catalogue-stickers.html"><button><i class="fa-solid fa-box"></i> Стікери для вітрини</button></a>
+        <a href="main-menu-html/catalogue-by-LED-neon.html"><button><i class="fa-solid fa-box"></i> Заказати "LED neon"</button></a>
+        <a href="main-menu-html/catalogue-by-stickers.html"><button><i class="fa-solid fa-box"></i> Заказати "Стікери для вітрини"</button></a>
+        <a href="main-menu-html/basket.html"><button><i class="fa-solid fa-cart-shopping"></i> Корзина</button></a>
         <button onclick="openSocials()"><i class="fa-solid fa-share-nodes"></i> Соцсети</button>
         <button onclick="window.location.href='main-menu-html/Support.html'"><i class="fa-solid fa-headset"></i> Підтримка</button>
 
@@ -482,37 +528,46 @@
     <div class="store-title">Каталог</div>
 
     <div class="products">
-        <div class="product">
-            <img src="main-menu/Catalogue2.jfif" alt="LED neon" loading="lazy">
-            <div class="product-info">
-                <span>LED neon</span>
-                <span class="product-value">100</span>
+        <a href="main-menu-html/сatalogue-LED-neon.html" class="product-link">
+            <div class="product">
+                <img src="main-menu/Catalogue2.jfif" alt="LED neon" loading="lazy">
+                <div class="product-info">
+                    <span>LED neon</span>
+                    <span class="product-value">100</span>
+                </div>
             </div>
-        </div>
+        </a>
 
-        <div class="product">
-            <img src="main-menu/Catalogue3.jpg" alt="Стікери для вітрини" loading="lazy">
-            <div class="product-info">
-                <span>Стікери для вітрини</span>
-                <span class="product-value">100</span>
+        <a href="main-menu-html/catalogue-stickers.html" class="product-link">
+            <div class="product">
+                <img src="main-menu/Catalogue3.jpg" alt="LED neon" loading="lazy">
+                <div class="product-info">
+                    <span>Стікери для вітрини</span>
+                    <span class="product-value">100</span>
+                </div>
             </div>
-        </div>
+        </a>
 
-        <div class="product">
-            <img src="main-menu/Catalogue1.webp" alt="LED neon" loading="lazy">
-            <div class="product-info">
-                <span>Заказати "LED neon"</span>
-                <span class="product-value"></span>
+        <a href="main-menu-html/catalogue-by-LED-neon.html" class="product-link">
+            <div class="product">
+                <img src="main-menu/Catalogue1.webp" alt="LED neon" loading="lazy">
+                <div class="product-info">
+                    <span>Заказати "LED neon"</span>
+                    <span class="product-value"></span>
+                </div>
             </div>
-        </div>
+        </a>
 
-        <div class="product">
-            <img src="main-menu/Catalogue4.webp" alt="Стікери для вітрини" loading="lazy">
-            <div class="product-info">
-                <span>Заказати "Стікери для вітрини"</span>
-                <span class="product-value"></span>
+        <a href="main-menu-html/catalogue-by-stickers.html" class="product-link">
+            <div class="product">
+                <img src="main-menu/Catalogue4.webp" alt="LED neon" loading="lazy">
+                <div class="product-info">
+                    <span>Заказати "Стікери для вітрини"</span>
+                    <span class="product-value"></span>
+                </div>
             </div>
-        </div>
+        </a>
+
 
         <div class="product">
             <img src="main-menu/Catalogue5.webp" alt="Стікери для вітрини" loading="lazy">
@@ -538,37 +593,37 @@
             <h4>Меню</h4>
             <ul class="footer-menu">
                 <li>
-                    <a href="index.html">
+                    <a href="#">
                         <i class="fa-solid fa-store"></i> Каталог
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="main-menu-html/сatalogue-LED-neon.html">
                         <i class="fa-solid fa-box"></i> LED neon
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="main-menu-html/catalogue-stickers.html">
                         <i class="fa-solid fa-box"></i> Стікери для вітрини
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="main-menu-html/catalogue-by-LED-neon.html">
                         <i class="fa-solid fa-box"></i> Заказати "LED neon"
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="main-menu-html/catalogue-by-stickers.html">
                         <i class="fa-solid fa-box"></i> Заказати "Стікери"
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="main-menu-html/basket.html">
                         <i class="fa-solid fa-cart-shopping"></i> Корзина
                     </a>
                 </li>
@@ -646,11 +701,3 @@
 
 </body>
 </html>
-
-</body>
-</html>
-
-
-
-
-
