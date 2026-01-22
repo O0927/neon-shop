@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>LED Neon Catalogue | NEOFORM</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #fbfbfd;
+      --text-main: #1d1d1f;
+      --text-muted: #6e6e73;
+      --accent: #0071e3;
+      --glass: rgba(255, 255, 255, 0.9);
+      --border: rgba(0, 0, 0, 0.08);
+      --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--bg); color: var(--text-main); line-height: 1.5; overflow-x: hidden; width: 100%; }
+
+    /* --- MOBILE MENU --- */
+    .side-menu {
+      position: fixed; top: 0; left: -100%; width: 85%; height: 100dvh;
+      background: #fff; z-index: 3000; padding: 30px 20px;
+      transition: var(--transition); display: flex; flex-direction: column;
+    }
+    .side-menu.active { left: 0; box-shadow: 20px 0 50px rgba(0,0,0,0.1); }
+
+    .menu-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 30px;
+    }
+    .close-menu { font-size: 28px; padding: 5px; }
+
+    .menu-items { list-style: none; }
+    .menu-items li { margin-bottom: 8px; opacity: 0; transform: translateX(-30px); transition: 0.5s ease; }
+    .side-menu.active .menu-items li { opacity: 1; transform: translateX(0); }
+
+    .menu-items a {
+      display: flex; align-items: center; gap: 15px; text-decoration: none;
+      color: var(--text-main); font-size: 18px; font-weight: 600;
+      padding: 16px; border-radius: 14px; background: var(--bg-secondary);
+      transition: 0.3s;
+    }
+    .menu-items a:active { transform: scale(0.95); background: #eee; }
+
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px); z-index: 2500; opacity: 0; pointer-events: none; transition: 0.4s;
+    }
+    .overlay.active { opacity: 1; pointer-events: auto; }
+
+    /* --- HEADER --- */
+    .header {
+      position: fixed; top: 0; width: 100%; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; z-index: 2000; background: var(--glass);
+      backdrop-filter: blur(15px); border-bottom: 1px solid var(--border);
+    }
+    .logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; background: linear-gradient(90deg, #1d1d1f, #0071e3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    /* --- SECTION TITLE --- */
+    .catalogue-header {
+      padding: 100px 20px 20px;
+      text-align: left;
+    }
+    .catalogue-header h1 { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
+    .catalogue-header p { color: var(--text-muted); font-size: 15px; }
+
+    /* --- PRODUCTS (ПО 2 В РЯД) --- */
+    .section { padding: 10px 15px 40px; }
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    .card {
+      background: var(--bg-secondary); border-radius: 20px; padding: 10px;
+      text-decoration: none; color: inherit; border: 1px solid var(--border);
+      transition: 0.4s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:active { transform: scale(0.97); background: #fff; }
+    .card-img-container { width: 100%; aspect-ratio: 1/1; border-radius: 15px; overflow: hidden; margin-bottom: 10px; background: #eee; }
+    .card-img { width: 100%; height: 100%; object-fit: cover; }
+    .card h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 40px; }
+    .price { color: var(--accent); font-weight: 700; font-size: 16px; margin-top: auto; }
+
+    /* --- FOOTER --- */
+    .footer-main {
+      background: #000; color: #fff; padding: 50px 20px 30px;
+      border-radius: 40px 40px 0 0; margin-top: 40px;
+    }
+    .footer-brand h2 { font-size: 28px; margin-bottom: 10px; }
+    .footer-col { margin-top: 35px; }
+    .footer-col h4 { margin-bottom: 15px; color: #fff; border-left: 3px solid var(--accent); padding-left: 10px; font-size: 18px; }
+
+    .contact-info { display: flex; flex-direction: column; gap: 12px; }
+    .contact-item { color: #86868b; text-decoration: none; font-size: 15px; display: flex; align-items: center; gap: 10px; }
+    .contact-item span { color: #fff; font-weight: 600; }
+
+    .social-icons { display: flex; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
+    .social-link {
+      width: 45px; height: 45px; background: #1d1d1f; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 18px; text-decoration: none; transition: 0.3s;
+    }
+    .social-link:active { transform: scale(0.85); background: var(--accent); }
+
+    .footer-bottom { margin-top: 40px; padding-top: 20px; border-top: 1px solid #1d1d1f; font-size: 11px; text-align: center; color: #424245; }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<nav class="side-menu" id="sideMenu">
+  <div class="menu-header">
+    <div class="logo">NEOFORM</div>
+    <i class="fa-solid fa-xmark close-menu" onclick="toggleMenu()"></i>
+  </div>
+  <ul class="menu-items">
+    <li style="transition-delay: 0.1s"><a href="../index.html" onclick="toggleMenu()"><i class="fa-solid fa-house"></i> Головна</a></li>
+    <li style="transition-delay: 0.2s"><a href="сatalogue-LED-neon.html" onclick="toggleMenu()"><i class="fa-solid fa-lightbulb"></i> LED neon</a></li>
+    <li style="transition-delay: 0.3s"><a href="catalogue-stickers.html"><i class="fa-solid fa-box-archive"></i> Стікери</a></li>
+    <li style="transition-delay: 0.4s"><a href="order.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Замовити</a></li>
+    <li style="transition-delay: 0.5s"><a href="basket.html"><i class="fa-solid fa-cart-shopping"></i> Кошик</a></li>
+    <li style="transition-delay: 0.6s"><a href="Support.html"><i class="fa-solid fa-headset"></i> Підтримка</a></li>
+  </ul>
+</nav>
+
+<header class="header">
+  <div class="burger-btn" onclick="toggleMenu()" style="font-size: 22px; padding: 10px;">
+    <i class="fa-solid fa-bars-staggered"></i>
+  </div>
+  <div class="logo">NEOFORM</div>
+  <a href="basket.html" class="cart-btn" style="font-size: 20px; padding: 10px; color: var(--text-main);">
+    <i class="fa-solid fa-cart-shopping"></i>
+  </a>
+</header>
+
+<main>
+  <section class="catalogue-header">
+    <h1>LED Neon</h1>
+    <p>Колекція неонових вивісок для вашого інтер'єру</p>
+  </section>
+
+  <section class="section">
+    <div class="products-grid">
+      <a href="#" class="card reveal">
+        <div class="card-img-container">
+          <img src="../main-menu/lsad.webp" alt="Neon 1" class="card-img">
+        </div>
+        <h3>Neon Heart (Red Edition)</h3>
+        <p class="price">1 200 ₴</p>
+      </a>
+
+      <a href="#" class="card reveal">
+        <div class="card-img-container">
+          <img src="../main-menu/lsad.webp" alt="Neon 2" class="card-img">
+        </div>
+        <h3>Cyberpunk Mask Light</h3>
+        <p class="price">2 450 ₴</p>
+      </a>
+
+      <a href="#" class="card reveal">
+        <div class="card-img-container">
+          <img src="../main-menu/lsad.webp" alt="Neon 3" class="card-img">
+        </div>
+        <h3>Coffee Time Sign</h3>
+        <p class="price">950 ₴</p>
+      </a>
+
+      <a href="#" class="card reveal">
+        <div class="card-img-container">
+          <img src="../main-menu/lsad.webp" alt="Neon 4" class="card-img">
+        </div>
+        <h3>Good Vibes Only</h3>
+        <p class="price">3 100 ₴</p>
+      </a>
+
+      <a href="#" class="card reveal">
+        <div class="card-img-container">
+          <img src="../main-menu/lsad.webp" alt="Neon 5" class="card-img">
+        </div>
+        <h3>Moon & Stars Kids</h3>
+        <p class="price">1 800 ₴</p>
+      </a>
+
+      <a href="#" class="card reveal">
+        <div class="card-img-container">
+          <img src="../main-menu/lsad.webp" alt="Neon 6" class="card-img">
+        </div>
+        <h3>Gaming Zone LED</h3>
+        <p class="price">2 200 ₴</p>
+      </a>
+
+    </div>
+  </section>
+</main>
+
+<footer class="footer-main">
+  <div class="footer-brand">
+    <h2>NEOFORM</h2>
+    <p style="color: #86868b; font-size: 14px;">Втілюємо ваші найсміливіші ідеї у світлі.</p>
+    <div class="social-icons">
+      <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" class="social-link"><i class="fa-brands fa-telegram"></i></a>
+      <a href="#" class="social-link"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="#" class="social-link"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+  </div>
+
+  <div class="footer-col">
+    <h4>Контакти</h4>
+    <div class="contact-info">
+      <p class="contact-item"><i class="fa-solid fa-location-dot"></i> Дніпро, Україна</p>
+      <a href="tel:+380000000000" class="contact-item"><i class="fa-solid fa-phone"></i> <span>+380 ** *** ** **</span></a>
+      <a href="mailto:info@neoform.com" class="contact-item"><i class="fa-solid fa-envelope"></i> <span>info@neoform.com</span></a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 NEOFORM Studio</p>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('sideMenu');
+    const overlay = document.getElementById('overlay');
+    menu.classList.toggle('active');
+    overlay.classList.toggle('active');
+    document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('active');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

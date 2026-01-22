@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NEOFORM | Підтримка</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #fbfbfd;
+      --text-main: #1d1d1f;
+      --text-muted: #6e6e73;
+      --accent: #0071e3;
+      --glass: rgba(255, 255, 255, 0.9);
+      --border: rgba(0, 0, 0, 0.08);
+      --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      --card-bg: #f5f5f7;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--bg); color: var(--text-main); line-height: 1.5; overflow-x: hidden; width: 100%; }
+
+    /* --- MOBILE MENU --- */
+    .side-menu {
+      position: fixed; top: 0; left: -100%; width: 85%; height: 100dvh;
+      background: #fff; z-index: 3000; padding: 30px 20px;
+      transition: var(--transition); display: flex; flex-direction: column;
+    }
+    .side-menu.active { left: 0; box-shadow: 20px 0 50px rgba(0,0,0,0.1); }
+
+    .menu-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 30px;
+    }
+    .close-menu { font-size: 28px; padding: 5px; }
+
+    .menu-items { list-style: none; }
+    .menu-items li { margin-bottom: 8px; opacity: 0; transform: translateX(-30px); transition: 0.5s ease; }
+    .side-menu.active .menu-items li { opacity: 1; transform: translateX(0); }
+
+    .menu-items a {
+      display: flex; align-items: center; gap: 15px; text-decoration: none;
+      color: var(--text-main); font-size: 18px; font-weight: 600;
+      padding: 16px; border-radius: 14px; background: var(--bg-secondary);
+      transition: 0.3s;
+    }
+    .menu-items a:active { transform: scale(0.95); background: #eee; }
+
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px); z-index: 2500; opacity: 0; pointer-events: none; transition: 0.4s;
+    }
+    .overlay.active { opacity: 1; pointer-events: auto; }
+
+    /* --- HEADER --- */
+    .header {
+      position: fixed; top: 0; width: 100%; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; z-index: 2000; background: var(--glass);
+      backdrop-filter: blur(15px); border-bottom: 1px solid var(--border);
+    }
+    .logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; background: linear-gradient(90deg, #1d1d1f, #0071e3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    /* --- SUPPORT CONTENT --- */
+    .support-container { padding: 100px 20px 40px; }
+
+    .page-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 30px;
+      letter-spacing: -0.5px;
+    }
+
+    .support-card {
+      background: var(--bg-secondary);
+      border-radius: 30px;
+      padding: 25px;
+      margin-bottom: 25px;
+      border: 1px solid var(--border);
+    }
+
+    .support-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
+    .support-card p { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
+
+    /* FAQ Accordion */
+    .faq-item {
+      background: #1d1d1f;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+    .faq-question {
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .faq-question i { transition: 0.3s; font-size: 14px; color: var(--accent); }
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #a1a1a6;
+      font-size: 14px;
+    }
+    .faq-item.active .faq-answer { padding-bottom: 18px; max-height: 200px; }
+    .faq-item.active .faq-question i { transform: rotate(180deg); }
+
+    /* Contact Grid */
+    .contact-buttons {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px;
+      background: #1d1d1f;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+    .contact-btn:active { transform: scale(0.96); opacity: 0.9; }
+    .contact-btn i { color: var(--accent); }
+
+    /* --- FOOTER --- */
+    .footer-main {
+      background: #000; color: #fff; padding: 50px 20px 30px;
+      border-radius: 40px 40px 0 0; margin-top: 40px;
+    }
+    .footer-brand h2 { font-size: 28px; margin-bottom: 10px; }
+    .footer-col { margin-top: 35px; }
+    .footer-col h4 { margin-bottom: 15px; color: #fff; border-left: 3px solid var(--accent); padding-left: 10px; font-size: 18px; }
+
+    .contact-info { display: flex; flex-direction: column; gap: 12px; }
+    .contact-item { color: #86868b; text-decoration: none; font-size: 15px; display: flex; align-items: center; gap: 10px; }
+    .contact-item span { color: #fff; font-weight: 600; }
+
+    .social-icons { display: flex; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
+    .social-link {
+      width: 45px; height: 45px; background: #1d1d1f; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 18px; text-decoration: none; transition: 0.3s;
+    }
+    .social-link:active { transform: scale(0.85); background: var(--accent); }
+
+    .footer-bottom { margin-top: 40px; padding-top: 20px; border-top: 1px solid #1d1d1f; font-size: 11px; text-align: center; color: #424245; }
+
+    /* Animations */
+    .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<nav class="side-menu" id="sideMenu">
+  <div class="menu-header">
+    <div class="logo">NEOFORM</div>
+    <i class="fa-solid fa-xmark close-menu" onclick="toggleMenu()"></i>
+  </div>
+  <ul class="menu-items">
+    <li style="transition-delay: 0.1s"><a href="../index.html" onclick="toggleMenu()"><i class="fa-solid fa-house"></i> Головна</a></li>
+    <li style="transition-delay: 0.2s"><a href="сatalogue-LED-neon.html" onclick="toggleMenu()"><i class="fa-solid fa-lightbulb"></i> LED neon</a></li>
+    <li style="transition-delay: 0.3s"><a href="catalogue-stickers.html"><i class="fa-solid fa-box-archive"></i> Стікери</a></li>
+    <li style="transition-delay: 0.4s"><a href="order.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Замовити</a></li>
+    <li style="transition-delay: 0.5s"><a href="basket.html"><i class="fa-solid fa-cart-shopping"></i> Кошик</a></li>
+    <li style="transition-delay: 0.6s"><a href="Support.html"><i class="fa-solid fa-headset"></i> Підтримка</a></li>
+  </ul>
+</nav>
+
+<header class="header">
+  <div class="burger-btn" onclick="toggleMenu()" style="font-size: 22px; padding: 10px;">
+    <i class="fa-solid fa-bars-staggered"></i>
+  </div>
+  <div class="logo">NEOFORM</div>
+  <a href="basket.html" class="cart-btn" style="font-size: 20px; padding: 10px; color: var(--text-main);">
+    <i class="fa-solid fa-cart-shopping"></i>
+  </a>
+</header>
+
+<main class="support-container">
+  <h1 class="page-title reveal">Підтримка клієнтів</h1>
+
+  <section class="support-card reveal">
+    <h3>FAQ</h3>
+    <p>Тут ви знайдете відповіді на найпоширеніші питання:</p>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Як оформити замовлення? <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        Виберіть товар у каталозі та напишіть нашому менеджеру в Telegram. Ми узгодимо деталі дизайну та доставки.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Які способи оплати доступні? <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        Ми приймаємо оплату на картку, розрахунковий рахунок або післяплату при отриманні (за умови передоплати).
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Доставка та терміни <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        Виготовлення займає 3-5 робочих днів. Доставка здійснюється Новою Поштою по всій Україні.
+      </div>
+    </div>
+  </section>
+
+  <section class="support-card reveal">
+    <h3>Зв'язок з нами</h3>
+    <p>Виберіть зручний спосіб зв'язку:</p>
+    <div class="contact-buttons">
+      <a href="mailto:info@neoform.com" class="contact-btn"><i class="fa-solid fa-envelope"></i> E-mail</a>
+      <a href="tel:+380000000000" class="contact-btn"><i class="fa-solid fa-phone"></i> Телефон</a>
+      <a href="https://t.me/your_manager" class="contact-btn"><i class="fa-brands fa-telegram"></i> Telegram</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer-main">
+  <div class="footer-brand">
+    <h2>NEOFORM</h2>
+    <p style="color: #86868b; font-size: 14px;">Втілюємо ваші найсміливіші ідеї у світлі.</p>
+    <div class="social-icons">
+      <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" class="social-link"><i class="fa-brands fa-telegram"></i></a>
+      <a href="#" class="social-link"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="#" class="social-link"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+  </div>
+
+  <div class="footer-col">
+    <h4>Контакти</h4>
+    <div class="contact-info">
+      <p class="contact-item"><i class="fa-solid fa-location-dot"></i> Дніпро, Україна</p>
+      <a href="tel:+380000000000" class="contact-item"><i class="fa-solid fa-phone"></i> <span>+380 ** *** ** **</span></a>
+      <a href="mailto:info@neoform.com" class="contact-item"><i class="fa-solid fa-envelope"></i> <span>info@neoform.com</span></a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 NEOFORM Studio</p>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('sideMenu');
+    const overlay = document.getElementById('overlay');
+    menu.classList.toggle('active');
+    overlay.classList.toggle('active');
+    document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+  }
+
+  function toggleFaq(element) {
+    const item = element.parentElement;
+    item.classList.toggle('active');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('active');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
