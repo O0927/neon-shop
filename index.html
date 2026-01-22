@@ -2,702 +2,259 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rize Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEOFORM | Mobile Luxury Neon</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-
-        :root{
-            --c1:#1C1C1C;
-            --c2:#4B5563;
-            --c3:#7e7e7e;
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #fbfbfd;
+            --text-main: #1d1d1f;
+            --text-muted: #6e6e73;
+            --accent: #0071e3;
+            --glass: rgba(255, 255, 255, 0.9);
+            --border: rgba(0, 0, 0, 0.08);
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        body{
-            background:#fff;
-            color:#181f28;
-            user-select:none;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: var(--text-main); line-height: 1.5; overflow-x: hidden; width: 100%; }
+
+        /* --- MOBILE MENU --- */
+        .side-menu {
+            position: fixed; top: 0; left: -100%; width: 85%; height: 100dvh;
+            background: #fff; z-index: 3000; padding: 30px 20px;
+            transition: var(--transition); display: flex; flex-direction: column;
         }
+        .side-menu.active { left: 0; box-shadow: 20px 0 50px rgba(0,0,0,0.1); }
 
-        /* HEADER */
-        .header{
-            position:fixed;
-            top:0;
-            left:0;
-            width:100%;
-            height:56px;
-            background:#fff;
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            padding:0 16px;
-            z-index:1001;
-            transition:.3s;
+        .menu-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 30px;
         }
+        .close-menu { font-size: 28px; padding: 5px; }
 
-        .header::after{
-            content:"";
-            position:absolute;
-            bottom:0;
-            left:0;
-            width:100%;
-            height:2px;
-            background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c1));
+        .menu-items { list-style: none; }
+        .menu-items li { margin-bottom: 8px; opacity: 0; transform: translateX(-30px); transition: 0.5s ease; }
+        .side-menu.active .menu-items li { opacity: 1; transform: translateX(0); }
+
+        .menu-items a {
+            display: flex; align-items: center; gap: 15px; text-decoration: none;
+            color: var(--text-main); font-size: 18px; font-weight: 600;
+            padding: 16px; border-radius: 14px; background: var(--bg-secondary);
+            transition: 0.3s;
         }
+        .menu-items a:active { transform: scale(0.95); background: #eee; }
 
-        .menu-btn,.cart-btn{font-size:24px;cursor:pointer}
-        .logo{font-weight:bold;font-size:18px;color:#4B5563}
-
-        /* MENU – RIZE STYLE */
-        .menu{
-            position:fixed;
-            top:0;
-            left:-80vw;
-            width:80vw;
-            max-width:360px;
-            height:100vh;
-            background:#fff;
-            z-index:1002;
-            display:flex;
-            flex-direction:column;
-            transition:.35s cubic-bezier(.4,0,.2,1);
-            box-shadow:4px 0 20px rgba(0,0,0,.08);
-            overflow:hidden;
+        .overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px); z-index: 2500; opacity: 0; pointer-events: none; transition: 0.4s;
         }
+        .overlay.active { opacity: 1; pointer-events: auto; }
 
-        .menu.open{left:0}
-
-        .menu-header{
-            padding:16px 18px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            font-weight:bold;
-            font-size:16px;
-            color:#4B5563;
-            position:relative;
+        /* --- HEADER --- */
+        .header {
+            position: fixed; top: 0; width: 100%; height: 64px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; z-index: 2000; background: var(--glass);
+            backdrop-filter: blur(15px); border-bottom: 1px solid var(--border);
         }
+        .logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; background: linear-gradient(90deg, #1d1d1f, #0071e3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        .menu-header::after{
-            content:"";
-            position:absolute;
-            bottom:0;
-            left:0;
-            width:100%;
-            height:2px;
-            background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+        /* --- HERO --- */
+        .hero {
+            min-height: 70vh; padding: 100px 20px 40px;
+            display: flex; flex-direction: column; align-items: center;
+            text-align: center; justify-content: center;
         }
+        .hero h1 { font-size: 38px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 15px; }
+        .hero p { color: var(--text-muted); font-size: 17px; margin-bottom: 30px; padding: 0 10px; }
+        .btn-main { width: 100%; max-width: 280px; padding: 18px; background: var(--text-main); color: white; border-radius: 16px; font-weight: 700; text-decoration: none; text-align: center; transition: 0.3s; }
+        .btn-main:active { transform: scale(0.95); }
 
-        .menu-content{
-            padding:12px 0;
-            display:flex;
-            flex-direction:column;
+        /* --- PRODUCTS (ПО 2 В РЯД) --- */
+        .section { padding: 40px 15px; }
+        .section-header h2 { font-size: 24px; font-weight: 800; margin-bottom: 25px; }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
-
-        .menu-content button{
-            background:none;
-            border:none;
-            padding:14px 22px;
-            font-size:15px;
-            text-align:left;
-            cursor:pointer;
-            color:#181f28;
-            position:relative;
-            transition:.25s;
+        .card {
+            background: var(--bg-secondary); border-radius: 20px; padding: 10px;
+            text-decoration: none; color: inherit; border: 1px solid var(--border);
+            transition: 0.4s;
         }
+        .card:active { transform: scale(0.97); background: #fff; }
+        .card-img-container { width: 100%; aspect-ratio: 1/1; border-radius: 15px; overflow: hidden; margin-bottom: 10px; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; }
+        .card h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .price { color: var(--accent); font-weight: 700; font-size: 14px; }
 
-        .menu-content button::before{
-            content:"";
-            position:absolute;
-            left:0;
-            top:0;
-            height:100%;
-            width:4px;
-            background:linear-gradient(var(--c1),var(--c2),var(--c3));
-            opacity:0;
-            transition:.25s;
+        /* --- ABOUT --- */
+        .about-section {
+            background: #1d1d1f; color: #fff;
+            padding: 40px 25px; margin: 15px; border-radius: 30px;
         }
+        .about-content h2 { font-size: 28px; font-weight: 800; margin-bottom: 15px; }
+        .about-content p { font-size: 15px; color: #a1a1a6; margin-bottom: 25px; }
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .stat-item h4 { font-size: 24px; color: var(--accent); }
 
-        .menu-content button:hover{
-            padding-left:28px;
-            color:#000;
+        /* --- FOOTER --- */
+        .footer-main {
+            background: #000; color: #fff; padding: 50px 20px 30px;
+            border-radius: 40px 40px 0 0; margin-top: 40px;
         }
+        .footer-brand h2 { font-size: 28px; margin-bottom: 10px; }
+        .footer-col { margin-top: 35px; }
+        .footer-col h4 { margin-bottom: 15px; color: #fff; border-left: 3px solid var(--accent); padding-left: 10px; font-size: 18px; }
 
-        .menu-content button:hover::before{
-            opacity:1;
+        .contact-info { display: flex; flex-direction: column; gap: 12px; }
+        .contact-item { color: #86868b; text-decoration: none; font-size: 15px; display: flex; align-items: center; gap: 10px; }
+        .contact-item span { color: #fff; font-weight: 600; }
+
+        .social-icons { display: flex; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
+        .social-link {
+            width: 45px; height: 45px; background: #1d1d1f; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 18px; text-decoration: none; transition: 0.3s;
         }
-        /* MENU ITEMS ANIMATION */
-        .menu-content button{
-            opacity:0;
-            transform:translateX(-10px);
-            transition:
-                    opacity .35s ease,
-                    transform .35s ease;
-        }
+        .social-link:active { transform: scale(0.85); background: var(--accent); }
 
-        /* коли меню відкрите */
-        .menu.open .menu-content button{
-            opacity:1;
-            transform:translateX(0);
-        }
+        .footer-bottom { margin-top: 40px; padding-top: 20px; border-top: 1px solid #1d1d1f; font-size: 11px; text-align: center; color: #424245; }
 
-        /* затримка для кожного пункту */
-        .menu.open .menu-content button:nth-child(1){transition-delay:.40s}
-        .menu.open .menu-content button:nth-child(2){transition-delay:.45s}
-        .menu.open .menu-content button:nth-child(3){transition-delay:.50s}
-        .menu.open .menu-content button:nth-child(4){transition-delay:.55s}
-        .menu.open .menu-content button:nth-child(5){transition-delay:.60s}
-        .menu.open .menu-content button:nth-child(6){transition-delay:.65s}
-        .menu.open .menu-content button:nth-child(7){transition-delay:.70s}
-        .menu.open .menu-content button:nth-child(8){transition-delay:.75s}
-
-        .close-btn{
-            font-size:22px;
-            cursor:pointer;
-            transition:.2s;
-        }
-
-        .close-btn:hover{
-            transform:rotate(90deg);
-        }
-
-        /* OVERLAY */
-        .overlay{
-            position:fixed;
-            inset:0;
-            background:rgba(0,0,0,.3);
-            opacity:0;
-            pointer-events:none;
-            transition:.3s;
-            z-index:1000;
-        }
-
-        .overlay.show{
-            opacity:1;
-            pointer-events:auto;
-        }
-
-        /* CONTENT */
-        .content{padding:80px 16px 24px}
-
-        .store-title{
-            text-align:center;
-            font-size:22px;
-            font-weight:bold;
-            margin-bottom:16px;
-            color:#4B5563;
-        }
-
-        .products{
-            display:grid;
-            grid-template-columns:repeat(2,1fr);
-            gap:14px;
-        }
-
-        .product{
-            background:#fff;
-            border-radius:12px;
-            box-shadow:0 4px 12px rgba(0,0,0,.1);
-            overflow:hidden;
-            transition:.3s;
-        }
-
-        .product:hover{transform:translateY(-4px)}
-
-        .product img{
-            width:100%;
-            aspect-ratio:1/1;
-            object-fit:cover;
-        }
-
-        .product-info{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:10px;
-            font-size:14px;
-        }
-
-        .product-value{
-            font-weight:bold;
-        }
-
-        /* FOOTER FIX */
-        .footer{
-            background:#000;
-            color:#fff;
-            padding:56px 16px 32px;
-            margin-top:56px;
-        }
-
-        .footer-container{
-            max-width:1100px;
-            margin:auto;
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-            gap:48px;
-        }
-
-        .footer h4{
-            margin-bottom:18px;
-            font-size:16px;
-            letter-spacing:.5px;
-        }
-
-        .footer ul{
-            list-style:none;
-        }
-
-        .footer ul li{
-            margin-bottom:14px;
-            font-size:14px;
-            color:#cfcfcf;
-            line-height:1.6;
-        }
-
-        .footer-contacts{
-            font-size:14px;
-            color:#cfcfcf;
-            line-height:1.8;
-        }
-
-        .footer-socials{
-            margin-top:18px;
-            display:flex;
-            gap:18px;
-        }
-
-        .footer-socials a{
-            width:48px;
-            height:48px;
-            background:#fff;
-            border-radius:50%;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            color:#000;
-            font-size:22px;
-            transition:.3s;
-        }
-
-        .footer-socials a:hover{
-            transform:translateY(-4px) scale(1.05);
-            background:#eaeaea;
-        }
-
-        /* BURGER BUTTON */
-        .menu-btn{
-            width:28px;
-            height:20px;
-            display:flex;
-            flex-direction:column;
-            justify-content:space-between;
-            cursor:pointer;
-        }
-
-        .menu-btn span{
-            height:3px;
-            width:100%;
-            background:#4B5563;
-            border-radius:2px;
-            transition:.35s cubic-bezier(.4,0,.2,1);
-        }
-
-        /* бургер → хрестик */
-        .menu.open ~ .header .menu-btn span:nth-child(1),
-        .menu-btn.active span:nth-child(1){
-            transform:rotate(45deg) translate(5px,5px);
-        }
-
-        .menu.open ~ .header .menu-btn span:nth-child(2),
-        .menu-btn.active span:nth-child(2){
-            opacity:0;
-        }
-
-        .menu.open ~ .header .menu-btn span:nth-child(3),
-        .menu-btn.active span:nth-child(3){
-            transform:rotate(-45deg) translate(6px,-6px);
-        }
-
-        /* CLOSE BUTTON (в меню) */
-        .close-btn{
-            width:24px;
-            height:24px;
-            position:relative;
-            cursor:pointer;
-        }
-
-        .close-btn::before,
-        .close-btn::after{
-            content:"";
-            position:absolute;
-            top:50%;
-            left:0;
-            width:100%;
-            height:3px;
-            background:#4B5563;
-            border-radius:2px;
-            transition:.3s;
-        }
-
-        .close-btn::before{transform:rotate(45deg)}
-        .close-btn::after{transform:rotate(-45deg)}
-
-        .close-btn:hover{
-            transform:rotate(90deg);
-        }
-
-        .footer-menu{
-            list-style:none;
-            display:flex;
-            flex-direction:column;
-            gap:10px;
-        }
-
-        .footer-menu li{
-            font-size:14px;
-            color:#ccc;
-            padding-left:6px;
-            cursor:pointer;
-            transition:.25s;
-        }
-
-        .footer-menu li:hover{
-            color:#fff;
-            transform:translateX(4px);
-        }
-
-        .footer-menu li i{
-            width:18px;
-            color:#9ca3af;
-        }
-
-        /* --- SUBMENU: справа → вліво --- */
-        .sub-menu{
-            position:absolute;
-            top:56px;
-            right:-100%;  /* стартує справа за межами меню */
-            width:100%;
-            height:calc(100% - 56px);
-            background:#fff;
-            transition:.35s cubic-bezier(.4,0,.2,1);
-        }
-
-        .menu.show-sub .sub-menu{
-            right:0;  /* з’являється на місці */
-        }
-
-        .menu.show-sub .main-menu{
-            transform:translateX(-100%);  /* головне меню зсувається вліво */
-        }
-
-        .back-btn{
-            font-weight:bold;
-        }
-        /* FOOTER LINKS FIX */
-        .footer-menu li a {
-            color: #fff;           /* білий колір тексту */
-            text-decoration: none; /* прибираємо підкреслення */
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.25s;
-        }
-
-        .footer-menu li a:hover {
-            transform: translateX(4px);
-            color: #fff;           /* залишається білим при наведенні */
-        }
-
-        .footer-menu li a i {
-            width: 18px;
-            color: #9ca3af;        /* іконки світліші */
-            transition: 0.25s;
-        }
-
-        .footer-menu li a:hover i {
-            color: #fff;           /* іконка стає білою при наведенні */
-        }
-
-        /* Для відвіданих посилань */
-        .footer-menu li a:visited {
-            color: #fff;
-        }
-        /* CART BUTTON FIX */
-        .cart-btn {
-            color: #000;                 /* чорний */
-            text-decoration: none;       /* прибирає підкреслення */
-            font-size: 24px;
-            transition:
-                    transform 0.15s ease,
-                    opacity 0.15s ease;
-        }
-
-        /* visited link — прибирає фіолетовий */
-        .cart-btn:visited {
-            color: #000;
-        }
-
-        /* hover — легке збільшення */
-        .cart-btn:hover {
-            transform: scale(1.1);
-            opacity: 0.85;
-        }
-
-        /* active (клік) — ефект натискання */
-        .cart-btn:active {
-            transform: scale(0.9);
-            opacity: 0.6;
-        }
-        .product-link {
-            display: block;
-            text-decoration: none;
-            color: #000;
-        }
-
-        .product-link:hover .product {
-            transform: scale(1.03);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-        }
-
-        .product {
-            transition: 0.25s ease;
-        }
-
-
-
-
+        /* Animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-
 <body>
-
-<div class="header">
-    <div class="menu-btn" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-
-    <div class="logo">RIZE</div>
-    <a href="main-menu-html/basket.html" class="cart-btn">
-        <i class="fa-solid fa-cart-shopping"></i>
-    </a>
-
-</div>
-
-<div class="menu" id="menu">
-    <div class="menu-header">
-        <span>Меню</span>
-        <span class="close-btn" onclick="toggleMenu()"></span>
-    </div>
-
-    <!-- ГОЛОВНЕ МЕНЮ -->
-    <div class="menu-content main-menu">
-        <a href="#"><button><i class="fa-solid fa-store"></i> Каталог</button></a>
-        <a href="main-menu-html/сatalogue-LED-neon.html"><button><i class="fa-solid fa-box"></i> LED neon</button></a>
-        <a href="main-menu-html/catalogue-stickers.html"><button><i class="fa-solid fa-box"></i> Стікери для вітрини</button></a>
-        <a href="main-menu-html/catalogue-by-LED-neon.html"><button><i class="fa-solid fa-box"></i> Заказати "LED neon"</button></a>
-        <a href="main-menu-html/catalogue-by-stickers.html"><button><i class="fa-solid fa-box"></i> Заказати "Стікери для вітрини"</button></a>
-        <a href="main-menu-html/basket.html"><button><i class="fa-solid fa-cart-shopping"></i> Корзина</button></a>
-        <button onclick="openSocials()"><i class="fa-solid fa-share-nodes"></i> Соцсети</button>
-        <button onclick="window.location.href='main-menu-html/Support.html'"><i class="fa-solid fa-headset"></i> Підтримка</button>
-
-    </div>
-
-
-    <!-- ПІДМЕНЮ СОЦСЕТІВ -->
-    <div class="menu-content sub-menu">
-        <button class="back-btn" onclick="closeSocials()">
-            <i class="fa-solid fa-arrow-left"></i> Назад
-        </button>
-
-        <button><i class="fab fa-telegram"></i> Telegram</button>
-        <button><i class="fab fa-instagram"></i> Instagram</button>
-        <button><i class="fab fa-youtube"></i> YouTube</button>
-        <button><i class="fab fa-tiktok"></i> TikTok</button>
-    </div>
-</div>
 
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-<div class="content">
-    <div class="store-title">Каталог</div>
+<nav class="side-menu" id="sideMenu">
+    <div class="menu-header">
+        <div class="logo">NEOFORM</div>
+        <i class="fa-solid fa-xmark close-menu" onclick="toggleMenu()"></i>
+    </div>
+    <ul class="menu-items">
+        <li style="transition-delay: 0.1s"><a href="#" onclick="toggleMenu()"><i class="fa-solid fa-house"></i> Головна</a></li>
+        <li style="transition-delay: 0.2s"><a href="main-menu-html/сatalogue-LED-neon.html" onclick="toggleMenu()"><i class="fa-solid fa-lightbulb"></i> LED neon</a></li>
+        <li style="transition-delay: 0.3s"><a href="main-menu-html/catalogue-stickers.html"><i class="fa-solid fa-box-archive"></i> Стікери</a></li>
+        <li style="transition-delay: 0.4s"><a href="main-menu-html/order.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Замовити</a></li>
+        <li style="transition-delay: 0.5s"><a href="main-menu-html/basket.html"><i class="fa-solid fa-cart-shopping"></i> Кошик</a></li>
+        <li style="transition-delay: 0.6s"><a href="main-menu-html/Support.html"><i class="fa-solid fa-headset"></i> Підтримка</a></li>
+    </ul>
+</nav>
 
-    <div class="products">
-        <a href="main-menu-html/сatalogue-LED-neon.html" class="product-link">
-            <div class="product">
-                <img src="main-menu/Catalogue2.jfif" alt="LED neon" loading="lazy">
-                <div class="product-info">
-                    <span>LED neon</span>
-                    <span class="product-value">100</span>
-                </div>
-            </div>
+<header class="header">
+    <div class="burger-btn" onclick="toggleMenu()" style="font-size: 22px; padding: 10px;">
+        <i class="fa-solid fa-bars-staggered"></i>
+    </div>
+    <div class="logo">NEOFORM</div>
+    <a href="main-menu-html/basket.html" class="cart-btn" style="font-size: 20px; padding: 10px; color: var(--text-main);">
+        <i class="fa-solid fa-cart-shopping"></i>
+    </a>
+</header>
+
+<section class="hero">
+    <div class="reveal active">
+        <h1>Світло, що створює історію.</h1>
+        <p>Преміальний неон для вашого інтер'єру та бізнесу.</p>
+        <a href="#catalog" class="btn-main">Переглянути категорії</a>
+    </div>
+</section>
+
+<main class="section" id="catalog">
+    <div class="section-header reveal">
+        <h2>Категорії</h2>
+    </div>
+    <div class="products-grid">
+        <a href="main-menu-html/сatalogue-LED-neon.html" class="card reveal">
+            <div class="card-img-container"><img src="main-menu/Catalogue2.jfif" class="card-img" alt="Neon"></div>
+            <h3>LED Neon</h3>
+            <p class="price">від 1 200 ₴</p>
         </a>
-
-        <a href="main-menu-html/catalogue-stickers.html" class="product-link">
-            <div class="product">
-                <img src="main-menu/Catalogue3.jpg" alt="LED neon" loading="lazy">
-                <div class="product-info">
-                    <span>Стікери для вітрини</span>
-                    <span class="product-value">100</span>
-                </div>
-            </div>
+        <a href="main-menu-html/catalogue-stickers.html" class="card reveal">
+            <div class="card-img-container"><img src="main-menu/Catalogue3.jpg" class="card-img" alt="Stickers"></div>
+            <h3>Стікери</h3>
+            <p class="price">від 450 ₴</p>
         </a>
-
-        <a href="main-menu-html/catalogue-by-LED-neon.html" class="product-link">
-            <div class="product">
-                <img src="main-menu/Catalogue1.webp" alt="LED neon" loading="lazy">
-                <div class="product-info">
-                    <span>Заказати "LED neon"</span>
-                    <span class="product-value"></span>
-                </div>
-            </div>
+        <a href="main-menu-html/order.html" class="card reveal">
+            <div class="card-img-container"><img src="main-menu/Catalogue1.webp" class="card-img" alt="Custom"></div>
+            <h3>Custom</h3>
+            <p class="price">За запитом</p>
         </a>
-
-        <a href="main-menu-html/catalogue-by-stickers.html" class="product-link">
-            <div class="product">
-                <img src="main-menu/Catalogue4.webp" alt="LED neon" loading="lazy">
-                <div class="product-info">
-                    <span>Заказати "Стікери для вітрини"</span>
-                    <span class="product-value"></span>
-                </div>
-            </div>
+        <a href="#" class="card reveal">
+            <div class="card-img-container"><img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80" class="card-img" alt="Decor"></div>
+            <h3></h3>
+            <p class="price"></p>
         </a>
+    </div>
+</main>
 
-
-        <div class="product">
-            <img src="main-menu/Catalogue5.webp" alt="Стікери для вітрини" loading="lazy">
-            <div class="product-info">
-                <span></span>
-                <span class="product-value"></span>
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="main-menu/Catalogue6.webp" alt="Стікери для вітрини" loading="lazy">
-            <div class="product-info">
-                <span></span>
-                <span class="product-value"></span>
-            </div>
+<section class="about-section reveal">
+    <div class="about-content">
+        <h2>Про нас</h2>
+        <p>Ми проектуємо атмосферу. Наша команда поєднує інженерну точність та художній погляд.</p>
+        <div class="stats">
+            <div class="stat-item"><h4>500+</h4><p>Проектів</p></div>
+            <div class="stat-item"><h4>100%</h4><p>Якість</p></div>
         </div>
     </div>
-</div>
+</section>
 
-<footer class="footer">
-    <div class="footer-container">
-        <div>
-            <h4>Меню</h4>
-            <ul class="footer-menu">
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-store"></i> Каталог
-                    </a>
-                </li>
-
-                <li>
-                    <a href="main-menu-html/сatalogue-LED-neon.html">
-                        <i class="fa-solid fa-box"></i> LED neon
-                    </a>
-                </li>
-
-                <li>
-                    <a href="main-menu-html/catalogue-stickers.html">
-                        <i class="fa-solid fa-box"></i> Стікери для вітрини
-                    </a>
-                </li>
-
-                <li>
-                    <a href="main-menu-html/catalogue-by-LED-neon.html">
-                        <i class="fa-solid fa-box"></i> Заказати "LED neon"
-                    </a>
-                </li>
-
-                <li>
-                    <a href="main-menu-html/catalogue-by-stickers.html">
-                        <i class="fa-solid fa-box"></i> Заказати "Стікери"
-                    </a>
-                </li>
-
-                <li>
-                    <a href="main-menu-html/basket.html">
-                        <i class="fa-solid fa-cart-shopping"></i> Корзина
-                    </a>
-                </li>
-
-                <li>
-                    <a href="main-menu-html/Support.html">
-                        <i class="fa-solid fa-headset"></i> Підтримка
-                    </a>
-                </li>
-            </ul>
+<footer class="footer-main">
+    <div class="footer-brand">
+        <h2>NEOFORM</h2>
+        <p style="color: #86868b; font-size: 14px;">Втілюємо ваші найсміливіші ідеї у світлі.</p>
+        <div class="social-icons">
+            <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fa-brands fa-telegram"></i></a>
+            <a href="#" class="social-link"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="#" class="social-link"><i class="fa-brands fa-youtube"></i></a>
         </div>
+    </div>
 
-        <div>
-            <h4>Контакти</h4>
-            <div class="footer-contacts">
-                Телефон: +380*********<br>
-                E-mail: буде
-            </div>
+    <div class="footer-col">
+        <h4>Контакти</h4>
+        <div class="contact-info">
+            <p class="contact-item"><i class="fa-solid fa-location-dot"></i> Дніпро, Україна</p>
+            <a href="tel:+380000000000" class="contact-item"><i class="fa-solid fa-phone"></i> <span>+380 ** *** ** **</span></a>
+            <a href="mailto:info@neoform.com" class="contact-item"><i class="fa-solid fa-envelope"></i> <span>info@neoform.com</span></a>
         </div>
+    </div>
 
-        <div>
-            <h4>Соцмережі</h4>
-            <div class="footer-socials">
-                <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            </div>
-        </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 NEOFORM Studio</p>
     </div>
 </footer>
 
 <script>
-    const menu = document.getElementById('menu');
-    const overlay = document.getElementById('overlay');
-    const menuBtn = document.querySelector('.menu-btn');
-
-    // Відкриття / закриття головного меню
-    function toggleMenu(){
-        const isOpen = menu.classList.contains('open');
-
-        if(isOpen){
-            // Закриваємо меню і скидаємо підменю
-            menu.classList.remove('open');
-            menu.classList.remove('show-sub'); // ❌ скидаємо соцсети
-            overlay.classList.remove('show');
-            menuBtn.classList.remove('active');
-        } else {
-            // Відкриваємо меню
-            menu.classList.add('open');
-            overlay.classList.add('show');
-            menuBtn.classList.add('active');
-        }
+    function toggleMenu() {
+        const menu = document.getElementById('sideMenu');
+        const overlay = document.getElementById('overlay');
+        menu.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
     }
 
-    // Переход на підменю соцмереж
-    function openSocials(){
-        menu.classList.add('show-sub');
-    }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('active');
+        });
+    }, { threshold: 0.1 });
 
-    // Повернення назад з підменю соцмереж
-    function closeSocials(){
-        menu.classList.remove('show-sub');
-    }
-
-    // Закриваємо меню, якщо клік на overlay
-    overlay.addEventListener('click', toggleMenu);
-
-    // Можна додати, щоб кнопки в main-menu закривали меню (за потреби)
-    document.querySelectorAll('.main-menu button:not([onclick*="openSocials"])').forEach(btn=>{
-        btn.addEventListener('click', toggleMenu);
-    });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
-
 
 </body>
 </html>
+</body>
+</html>
+
