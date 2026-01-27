@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEOFORM | Товар</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #fbfbfd;
+            --text-main: #1d1d1f;
+            --text-muted: #6e6e73;
+            --accent: #0071e3;
+            --glass: rgba(255, 255, 255, 0.85);
+            --border: rgba(0, 0, 0, 0.08);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: var(--text-main); line-height: 1.4; overflow-x: hidden; width: 100%; -webkit-font-smoothing: antialiased; }
+
+        /* --- LOGO (Твій градієнт) --- */
+        .logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; background: linear-gradient(90deg, #1d1d1f, #0071e3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- HEADER --- */
+        .header {
+            position: fixed; top: 0; width: 100%; height: 64px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; z-index: 2000; background: var(--glass);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* --- SIDE MENU (Повний список) --- */
+        .side-menu {
+            position: fixed; top: 0; left: -100%; width: 85%; height: 100dvh;
+            background: #fff; z-index: 3000; padding: 30px 20px; transition: var(--transition);
+            display: flex; flex-direction: column;
+        }
+        .side-menu.active { left: 0; box-shadow: 20px 0 50px rgba(0,0,0,0.1); }
+        .menu-items { list-style: none; display: grid; gap: 8px; margin-top: 20px; }
+        .menu-items a {
+            display: flex; align-items: center; gap: 15px; text-decoration: none;
+            color: var(--text-main); font-size: 17px; font-weight: 600;
+            padding: 16px; border-radius: 14px; background: var(--bg-secondary);
+        }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); z-index: 2500; opacity: 0; pointer-events: none; transition: 0.4s; }
+        .overlay.active { opacity: 1; pointer-events: auto; }
+
+        /* --- GALLERY --- */
+        .gallery-container { position: relative; width: 100%; padding-top: 64px; }
+        .btn-back-product {
+            position: absolute; top: 80px; left: 20px; z-index: 1000;
+            background: var(--glass); border: 1px solid var(--border);
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            backdrop-filter: blur(10px); color: var(--text-main); text-decoration: none;
+        }
+
+        .product-gallery {
+            display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+            scrollbar-width: none; gap: 12px; padding: 15px 20px; scroll-behavior: smooth;
+        }
+        .product-gallery::-webkit-scrollbar { display: none; }
+        .gallery-item { min-width: 100%; scroll-snap-align: center; position: relative; }
+        .gallery-item img {
+            width: 100%; aspect-ratio: 1/1; object-fit: cover;
+            border-radius: 24px; background: var(--bg-secondary);
+        }
+
+        .nav-arrow {
+            position: absolute; top: 55%; transform: translateY(-50%);
+            width: 38px; height: 38px; background: var(--glass);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            z-index: 100; border: 1px solid var(--border); backdrop-filter: blur(8px);
+        }
+        .arrow-prev { left: 30px; }
+        .arrow-next { right: 30px; }
+
+        /* --- PRODUCT INFO --- */
+        .product-info { padding: 20px 24px 140px; }
+        .product-category { font-size: 12px; color: var(--accent); text-transform: uppercase; font-weight: 800; letter-spacing: 1.2px; }
+        .product-title { font-size: 28px; font-weight: 800; margin: 8px 0; letter-spacing: -0.6px; }
+        .product-price { font-size: 24px; font-weight: 700; margin-bottom: 25px; }
+
+        .option-label { font-size: 14px; font-weight: 700; margin-bottom: 12px; display: block; }
+        .selector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
+        .selector-item {
+            padding: 14px; border: 1.5px solid var(--border); border-radius: 14px;
+            text-align: center; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.2s;
+        }
+        .selector-item.active { background: var(--text-main); color: #fff; border-color: var(--text-main); }
+
+        .color-dots { display: flex; gap: 14px; margin-bottom: 30px; }
+        .color-dot {
+            width: 32px; height: 32px; border-radius: 50%; border: 3px solid #fff;
+            box-shadow: 0 0 0 1px var(--border); cursor: pointer; transition: 0.2s;
+        }
+        .color-dot.active { box-shadow: 0 0 0 2px var(--accent); transform: scale(1.1); }
+
+        .info-card { background: var(--bg-secondary); border-radius: 20px; padding: 20px; margin-bottom: 12px; border: 1px solid var(--border); }
+        .info-card h4 { font-size: 15px; margin-bottom: 8px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .info-card p, .info-card li { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+
+        /* --- STICKY FOOTER --- */
+        .cta-sticky {
+            position: fixed; bottom: 0; width: 100%; background: var(--glass);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            padding: 12px 24px calc(12px + env(safe-area-inset-bottom));
+            border-top: 1px solid var(--border); z-index: 2000;
+            display: flex; align-items: center; gap: 15px;
+        }
+        .btn-tg-order {
+            flex: 1; background: #000; color: #fff; border-radius: 16px;
+            text-decoration: none; font-weight: 700; font-size: 16px;
+            display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px;
+        }
+
+        .reveal { opacity: 0; transform: translateY(15px); transition: 0.5s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .btn-back-modern {
+            /* Позиціонування */
+            position: absolute;
+            top: 85px;
+            left: 20px;
+            z-index: 1100;
+            text-decoration: none;
+        }
+
+        .btn-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+
+            /* Скляний ефект (Glassmorphism) */
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            /* Рамка та тінь */
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+
+            /* Текст та колір */
+            color: #1d1d1f;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        /* Анімація стрілки при наведенні або кліку */
+        .btn-back-modern:active .btn-content {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .btn-back-modern i {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-back-modern:hover i {
+            transform: translateX(-3px);
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<nav class="side-menu" id="sideMenu">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <div class="logo">NEOFORM</div>
+        <i class="fa-solid fa-xmark" style="font-size: 24px;" onclick="toggleMenu()"></i>
+    </div>
+    <ul class="menu-items">
+        <li><a href="../index.html"><i class="fa-solid fa-house"></i> Головна</a></li>
+        <li><a href="../main-menu-html/сatalogue-LED-neon.html"><i class="fa-solid fa-lightbulb"></i> LED neon</a></li>
+        <li><a href="../main-menu-html/catalogue-stickers.html"><i class="fa-solid fa-box-archive"></i> Стікери</a></li>
+        <li><a href="../main-menu-html/order.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Замовити</a></li>
+        <li><a href="../main-menu-html/basket.html"><i class="fa-solid fa-cart-shopping"></i> Кошик</a></li>
+        <li><a href="../main-menu-html/Support.html"><i class="fa-solid fa-headset"></i> Підтримка</a></li>
+    </ul>
+</nav>
+
+<header class="header">
+    <div onclick="toggleMenu()" style="font-size: 20px; cursor: pointer; padding: 10px;"><i class="fa-solid fa-bars-staggered"></i></div>
+    <div class="logo">NEOFORM</div>
+    <a href="../main-menu-html/basket.html" style="color: var(--text-main); font-size: 20px; padding: 10px;"><i class="fa-solid fa-cart-shopping"></i></a>
+</header>
+
+<main class="gallery-container">
+    <a href="../main-menu-html/сatalogue-LED-neon.html" class="btn-back-modern">
+        <div class="btn-content">
+            <i class="fa-solid fa-arrow-left-long"></i>
+            <span>До каталогу</span>
+        </div>
+    </a>
+
+    <div class="nav-arrow arrow-prev" onclick="scrollG(-1)"><i class="fa-solid fa-chevron-left"></i></div>
+    <div class="nav-arrow arrow-next" onclick="scrollG(1)"><i class="fa-solid fa-chevron-right"></i></div>
+
+    <div class="product-gallery" id="g">
+        <div class="gallery-item">
+            <img src="../img-goods/0001.webp" alt="P1">
+        </div>
+        <div class="gallery-item">
+            <img src="../main-menu/lsad.webp" alt="P2">
+        </div>
+        <div class="gallery-item">
+            <img src="https://via.placeholder.com/600x600/f5f5f7/86868b?text=NEOFORM+PREVIEW" alt="P3">
+        </div>
+    </div>
+
+    <div class="product-info">
+        <span class="product-category reveal">LED Collection</span>
+        <h1 class="product-title reveal">LED</h1>
+        <div class="product-price reveal"><span id="price-display">4 200</span> грн</div>
+
+        <span class="option-label reveal">Колір: <span id="color-name" style="color: var(--accent);">Red</span></span>
+        <div class="color-dots reveal">
+            <div class="color-dot active" style="background: #e63946;" onclick="updateC(this, 'Red')"></div>
+            <div class="color-dot" style="background: #0071e3;" onclick="updateC(this, 'Blue')"></div>
+            <div class="color-dot" style="background: #1d1d1f;" onclick="updateC(this, 'Black')"></div>
+        </div>
+
+        <span class="option-label reveal">Розмір (ММ):</span>
+        <div class="selector-grid reveal">
+            <div class="selector-item active" onclick="updateS(this, 4200)">200х400</div>
+            <div class="selector-item" onclick="updateS(this, 4450)">300х300</div>
+            <div class="selector-item" onclick="updateS(this, 4600)">100х200</div>
+        </div>
+
+        <div class="info-card reveal">
+            <h4><i class="fa-solid fa-align-left" style="color: var(--accent);"></i> Опис</h4>
+            <p>Унікальна неонова вивіска ручної роботи. Стане ідеальним доповненням інтер'єру, створюючи затишок та стиль у вашому домі чи офісі.</p>
+        </div>
+
+        <div class="info-card reveal">
+            <h4><i class="fa-solid fa-list-check" style="color: var(--accent);"></i> Характеристики</h4>
+            <ul style="padding-left: 18px;">
+                <li>Матеріал: Гнучкий LED неон</li>
+                <li>Основа: Прозорий акрил</li>
+                <li>Термін служби: до 50 000 годин</li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<div class="cta-sticky">
+    <div style="display:flex; flex-direction:column; min-width: 100px;">
+        <span style="font-size:10px; color:var(--text-muted); font-weight: 800;">ЦІНА:</span>
+        <strong id="footer-price" style="font-size: 19px;">4 200 грн</strong>
+    </div>
+    <a href="javascript:void(0)" class="btn-tg-order" onclick="sendOrder()">
+        <i class="fa-brands fa-telegram"></i> Замовити
+    </a>
+</div>
+
+<script>
+    let currentSize = "200х400";
+    let currentColor = "Red";
+
+    function toggleMenu() {
+        document.getElementById('sideMenu').classList.toggle('active');
+        document.getElementById('overlay').classList.toggle('active');
+    }
+
+    function scrollG(d) {
+        const g = document.getElementById('g');
+        g.scrollBy({ left: d * g.clientWidth, behavior: 'smooth' });
+    }
+
+    function updateC(el, n) {
+        document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+        el.classList.add('active');
+        document.getElementById('color-name').innerText = n;
+        currentColor = n;
+    }
+
+    function updateS(el, p) {
+        document.querySelectorAll('.selector-item').forEach(s => s.classList.remove('active'));
+        el.classList.add('active');
+        document.getElementById('price-display').innerText = p.toLocaleString();
+        document.getElementById('footer-price').innerText = p.toLocaleString() + " грн";
+        currentSize = el.innerText;
+    }
+
+    function sendOrder() {
+        const price = document.getElementById('footer-price').innerText;
+        const text = `Вітаю! Хочу замовити:\n📦 Nike Air Neon\n🎨 Колір: ${currentColor}\n📏 Розмір: ${currentSize}\n💰 Ціна: ${price}`;
+        window.location.href = `https://t.me/Manager_NEOFORM?text=${encodeURIComponent(text)}`;
+    }
+
+    const obs = new IntersectionObserver((es) => {
+        es.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
